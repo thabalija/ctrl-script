@@ -1,8 +1,8 @@
 'use client';
 
-import Editor from '@monaco-editor/react';
+import Editor, { DiffEditor, MonacoDiffEditor } from '@monaco-editor/react';
 import Link from 'next/link';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 interface ICodeEditor {
   getValue(): string;
@@ -10,6 +10,10 @@ interface ICodeEditor {
 
 export default function Home() {
   const editorRef = useRef<ICodeEditor>();
+  const diffEditorRef = useRef<MonacoDiffEditor>();
+
+  const original = 'banana, apple, orange';
+  const [modified, setModified] = useState(original);
 
   function handleEditorDidMount(editor: ICodeEditor) {
     editorRef.current = editor;
@@ -18,7 +22,14 @@ export default function Home() {
   function executeValue() {
     if (editorRef.current === undefined) return;
 
-    console.log((eval(editorRef.current.getValue())));
+    const func = new Function(editorRef.current.getValue());
+    const result = func.call( null, original );
+
+    setModified(result);
+  }
+
+  function handleDiffEditorDidMount(editor: MonacoDiffEditor) {
+    diffEditorRef.current = editor;
   }
 
   return (
@@ -26,12 +37,23 @@ export default function Home() {
       <button onClick={executeValue}>Execute value</button>
       <Link href="/">Home</Link>
       <Editor
-        height="90vh"
-        defaultValue='alert("Foo!")'
+        height="40vh"
+        defaultValue="return arguments[0].split(',').map((fruit, i) => fruit + i).join(',');"
         language="javascript"
         theme="vs-dark"
         onMount={handleEditorDidMount}
       />
+      <br />
+      <DiffEditor
+        height="40vh"
+        language="javascript"
+        theme="vs-dark"
+        original={original}
+        modified={modified}
+        onMount={handleDiffEditorDidMount}
+      />
     </>
   );
 }
+
+
