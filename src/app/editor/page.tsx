@@ -1,57 +1,44 @@
 'use client';
 
-import Editor, { DiffEditor, MonacoDiffEditor } from '@monaco-editor/react';
 import Link from 'next/link';
-import { useRef, useState } from 'react';
-
-interface ICodeEditor {
-  getValue(): string;
-}
+import CodeEditor from '../../features/editor/CodeEditor/CodeEditor';
+import FileDiff from '../../features/editor/FileDiff/FileDiff';
+import { useState } from 'react';
+import { Theme } from '@monaco-editor/react';
 
 export default function Home() {
-  const editorRef = useRef<ICodeEditor>();
-  const diffEditorRef = useRef<MonacoDiffEditor>();
-
+  const defaultScript = "return arguments[0].split(',').map((fruit, i) => fruit + i).join(',');"
   const original = 'banana, apple, orange';
+  const language = 'javascript';
+  const theme: Theme = 'vs-dark';
+  const [script, setScript] = useState<string | undefined>(defaultScript);
   const [modified, setModified] = useState(original);
 
-  function handleEditorDidMount(editor: ICodeEditor) {
-    editorRef.current = editor;
-  }
-
   function executeValue() {
-    if (editorRef.current === undefined) return;
+    if (script === undefined) return;
 
-    const func = new Function(editorRef.current.getValue());
+    const func = new Function(script);
     const result = func.call( null, original );
 
     setModified(result);
   }
 
-  function handleDiffEditorDidMount(editor: MonacoDiffEditor) {
-    diffEditorRef.current = editor;
+  function handleScriptChange(script: string | undefined) {
+    setScript(script);
   }
 
   return (
     <>
       <button onClick={executeValue}>Execute value</button>
       <Link href="/">Home</Link>
-      <Editor
-        height="40vh"
-        defaultValue="return arguments[0].split(',').map((fruit, i) => fruit + i).join(',');"
-        language="javascript"
-        theme="vs-dark"
-        onMount={handleEditorDidMount}
+      <CodeEditor
+        script={script}
+        language={language}
+        theme={theme}
+        handleScriptChange={handleScriptChange}
       />
       <br />
-      <DiffEditor
-        height="40vh"
-        language="javascript"
-        theme="vs-dark"
-        original={original}
-        modified={modified}
-        onMount={handleDiffEditorDidMount}
-      />
+      <FileDiff original={original} modified={modified} theme={theme} language={language} />
     </>
   );
 }
