@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prepare": "husky"
   },
   "dependencies": {
     "@monaco-editor/react": "^4.6.0",
@@ -20,6 +21,17 @@
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "15.0.3",
+    "eslint-config-prettier": "^9.1.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.4.2",
     "typescript": "^5"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown",
+    "*.{ts,tsx}": [
+      "prettier --write",
+      "eslint --fix"
+    ]
   }
 }
