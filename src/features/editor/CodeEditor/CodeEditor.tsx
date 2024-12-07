@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import Editor, { Theme } from '@monaco-editor/react';
+import Editor, { Theme } from "@monaco-editor/react";
 
 export interface ICodeEditorProps {
   script?: string;
@@ -9,9 +9,12 @@ export interface ICodeEditorProps {
   handleScriptChange: (value: string | undefined) => void;
 }
 
-export default function CodeEditor({ script, language, theme, handleScriptChange }: ICodeEditorProps) {
-
-
+export default function CodeEditor({
+  script,
+  language,
+  theme,
+  handleScriptChange,
+}: ICodeEditorProps) {
   return (
     <>
       <Editor

@@ -1,16 +1,17 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import CodeEditor from '../../features/editor/CodeEditor/CodeEditor';
-import FileDiff from '../../features/editor/FileDiff/FileDiff';
-import { useState } from 'react';
-import { Theme } from '@monaco-editor/react';
+import Link from "next/link";
+import CodeEditor from "../../features/editor/CodeEditor/CodeEditor";
+import FileDiff from "../../features/editor/FileDiff/FileDiff";
+import { useState } from "react";
+import { Theme } from "@monaco-editor/react";
 
 export default function Home() {
-  const defaultScript = "return arguments[0].split(',').map((fruit, i) => fruit + i).join(',');"
-  const original = 'banana, apple, orange';
-  const language = 'javascript';
-  const theme: Theme = 'vs-dark';
+  const defaultScript =
+    "return arguments[0].split(',').map((fruit, i) => fruit + i).join(',');";
+  const original = "banana, apple, orange";
+  const language = "javascript";
+  const theme: Theme = "vs-dark";
   const [script, setScript] = useState<string | undefined>(defaultScript);
   const [modified, setModified] = useState(original);
 
@@ -18,7 +19,7 @@ export default function Home() {
     if (script === undefined) return;
 
     const func = new Function(script);
-    const result = func.call( null, original );
+    const result = func.call(null, original);
 
     setModified(result);
   }
@@ -38,9 +39,12 @@ export default function Home() {
         handleScriptChange={handleScriptChange}
       />
       <br />
-      <FileDiff original={original} modified={modified} theme={theme} language={language} />
+      <FileDiff
+        original={original}
+        modified={modified}
+        theme={theme}
+        language={language}
+      />
     </>
   );
 }
-
-

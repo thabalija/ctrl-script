@@ -1,16 +1,21 @@
-'use client';
+"use client";
 
-import { DiffEditor, MonacoDiffEditor, Theme } from '@monaco-editor/react';
-import { useRef } from 'react';
+import { DiffEditor, MonacoDiffEditor, Theme } from "@monaco-editor/react";
+import { useRef } from "react";
 
 interface IFileDiffProps {
   original: string;
   modified: string;
   theme: Theme;
-  language: string
+  language: string;
 }
 
-export default function FileDiff({ original, modified, theme, language }: IFileDiffProps) {
+export default function FileDiff({
+  original,
+  modified,
+  theme,
+  language,
+}: IFileDiffProps) {
   const diffEditorRef = useRef<MonacoDiffEditor>();
 
   function handleDiffEditorDidMount(editor: MonacoDiffEditor) {
@@ -18,13 +23,13 @@ export default function FileDiff({ original, modified, theme, language }: IFileD
   }
 
   return (
-      <DiffEditor
-        height="40vh"
-        language={language}
-        theme={theme}
-        modified={modified}
-        original={original}
-        onMount={handleDiffEditorDidMount}
-      />
+    <DiffEditor
+      height="40vh"
+      language={language}
+      theme={theme}
+      modified={modified}
+      original={original}
+      onMount={handleDiffEditorDidMount}
+    />
   );
 }
