@@ -7,6 +7,8 @@ export default function Home() {
     <>
       <h1>Welcome to CTRL Script!</h1>
       <Link href="/editor">Open editor</Link>
+      <br />
+      <Link href="/files">Open files</Link>
     </>
   );
 }
