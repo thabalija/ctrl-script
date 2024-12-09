@@ -1,14 +1,12 @@
 "use client";
 
-import Link from "next/link";
+import { Navigation } from "../features/navigation/Navigation/Navigation";
 
 export default function Home() {
   return (
     <>
+      <Navigation />
       <h1>Welcome to CTRL Script!</h1>
-      <Link href="/editor">Open editor</Link>
-      <br />
-      <Link href="/files">Open files</Link>
     </>
   );
 }

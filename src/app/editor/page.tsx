@@ -1,10 +1,10 @@
 "use client";
 
 import { Theme } from "@monaco-editor/react";
-import Link from "next/link";
 import { useState } from "react";
-import CodeEditor from "../../features/editor/CodeEditor/CodeEditor";
-import FileDiff from "../../features/editor/FileDiff/FileDiff";
+import { CodeEditor } from "../../features/editor/CodeEditor/CodeEditor";
+import { FileDiff } from "../../features/editor/FileDiff/FileDiff";
+import { Navigation } from "../../features/navigation/Navigation/Navigation";
 
 export default function Editor() {
   const original = "banana, apple, orange";
@@ -28,14 +28,14 @@ export default function Editor() {
 
   return (
     <>
-      <button onClick={executeValue}>Execute value</button>
-      <Link href="/">Home</Link>
+      <Navigation />
       <CodeEditor
         script={script}
         language={language}
         theme={theme}
         handleScriptChange={handleScriptChange}
       />
+      <button onClick={executeValue}>Execute value</button>
       <br />
       <FileDiff
         original={original}

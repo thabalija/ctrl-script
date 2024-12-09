@@ -1,23 +1,17 @@
 "use client";
 
-import Link from "next/link";
-import { useState } from "react";
+import { FileUpload } from "../../core/file-upload/FileUpload/FileUpload";
+import { FileList } from "../../features/file-list/FileList/FileList";
+import { Navigation } from "../../features/navigation/Navigation/Navigation";
 
 export default function Files() {
-  const [files, setFiles] = useState<FileList | null>();
-
-  function handleRun() {
-    console.log(files);
-  }
-
   return (
     <>
-      <Link href="/">Home</Link>
-      <div>Files</div>;
-      <input type="file" onChange={(e) => setFiles(e.target.files)} />
-      <button onClick={handleRun} type="button">
-        Log files
-      </button>
+      <Navigation />
+
+      <FileUpload />
+
+      <FileList />
     </>
   );
 }
