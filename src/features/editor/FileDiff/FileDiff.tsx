@@ -10,7 +10,7 @@ interface IFileDiffProps {
   language: string;
 }
 
-export default function FileDiff({
+export function FileDiff({
   original,
   modified,
   theme,

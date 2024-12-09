@@ -1,14 +1,12 @@
 "use client";
 
-import Link from "next/link";
-import CodeEditor from "../../features/editor/CodeEditor/CodeEditor";
-import FileDiff from "../../features/editor/FileDiff/FileDiff";
-import { useState } from "react";
 import { Theme } from "@monaco-editor/react";
+import { useState } from "react";
+import { CodeEditor } from "../../features/editor/CodeEditor/CodeEditor";
+import { FileDiff } from "../../features/editor/FileDiff/FileDiff";
+import { Navigation } from "../../features/navigation/Navigation/Navigation";
 
-export default function Home() {
-  const defaultScript =
-    "return arguments[0].split(',').map((fruit, i) => fruit + i).join(',');";
+export default function Editor() {
   const original = "banana, apple, orange";
   const language = "javascript";
   const theme: Theme = "vs-dark";
@@ -30,14 +28,14 @@ export default function Home() {
 
   return (
     <>
-      <button onClick={executeValue}>Execute value</button>
-      <Link href="/">Home</Link>
+      <Navigation />
       <CodeEditor
         script={script}
         language={language}
         theme={theme}
         handleScriptChange={handleScriptChange}
       />
+      <button onClick={executeValue}>Execute value</button>
       <br />
       <FileDiff
         original={original}
@@ -48,3 +46,9 @@ export default function Home() {
     </>
   );
 }
+
+const defaultScript = `// File is located in the first argument. Return the modified file.
+
+const file = arguments[0];
+return file.split(',').map((fruit, i) => fruit + i).join(',');
+`;

@@ -9,7 +9,7 @@ export interface ICodeEditorProps {
   handleScriptChange: (value: string | undefined) => void;
 }
 
-export default function CodeEditor({
+export function CodeEditor({
   script,
   language,
   theme,
