@@ -1,12 +1,11 @@
 "use client";
 
-import { Navigation } from "../features/navigation/Navigation/Navigation";
+import { Container } from "@chakra-ui/react";
 
 export default function Home() {
   return (
-    <>
-      <Navigation />
+    <Container>
       <h1>Welcome to CTRL Script!</h1>
-    </>
+    </Container>
   );
 }

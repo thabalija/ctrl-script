@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@chakra-ui/react";
 import { db, FileItem as FileItemModel } from "../../../../db";
 
 export interface IFileItemProps {
@@ -13,7 +14,9 @@ export function FileItem({ fileItem }: IFileItemProps) {
   return (
     <p>
       <strong>{fileItem.name}</strong> <span>({fileItem.extension})</span>
-      <button onClick={deleteFileItem}>Remove</button>
+      <Button onClick={deleteFileItem} type="button">
+        Remove
+      </Button>
     </p>
   );
 }

@@ -1,10 +1,10 @@
 "use client";
 
+import { Button, Container } from "@chakra-ui/react";
 import { Theme } from "@monaco-editor/react";
 import { useState } from "react";
 import { CodeEditor } from "../../features/editor/CodeEditor/CodeEditor";
 import { FileDiff } from "../../features/editor/FileDiff/FileDiff";
-import { Navigation } from "../../features/navigation/Navigation/Navigation";
 
 export default function Editor() {
   const original = "banana, apple, orange";
@@ -27,15 +27,16 @@ export default function Editor() {
   }
 
   return (
-    <>
-      <Navigation />
+    <Container>
       <CodeEditor
         script={script}
         language={language}
         theme={theme}
         handleScriptChange={handleScriptChange}
       />
-      <button onClick={executeValue}>Execute value</button>
+      <br />
+      <Button onClick={executeValue}>Execute value</Button>
+      <br />
       <br />
       <FileDiff
         original={original}
@@ -43,7 +44,7 @@ export default function Editor() {
         theme={theme}
         language={language}
       />
-    </>
+    </Container>
   );
 }
 
