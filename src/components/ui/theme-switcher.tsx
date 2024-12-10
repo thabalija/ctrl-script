@@ -21,8 +21,8 @@ export function ThemeSwitcher() {
   if (!mounted) return null;
 
   return (
-    <Container display="flex">
-      <Text pr="4px">Dark mode</Text>
+    <Container display="flex" p="0" justifyContent="flex-end">
+      <Text mr="12px">Dark mode</Text>
       <Switch checked={theme === "dark"} onCheckedChange={toggleTheme} />
     </Container>
   );

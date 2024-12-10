@@ -5,19 +5,27 @@ import { ThemeSwitcher } from "../../../components/ui/theme-switcher";
 
 export function Header() {
   return (
-    <Container display={"flex"} justifyContent={"space-between"}>
-      <Link href="/">CTRL Script</Link>
+    <Container
+      display={"flex"}
+      justifyContent={"space-between"}
+      padding="12px 0"
+    >
+      <Container padding="0" flex="1 0 120px">
+        <Link href="/" p="4px 12px">
+          CTRL Script
+        </Link>
+      </Container>
 
-      <Container>
-        <Link href="/editor" p="12px 24px">
+      <Container padding="0">
+        <Link href="/editor" p="4px 12px">
           Editor
         </Link>
-        <Link href="/files" p="12px 24px">
+        <Link href="/files" p="4px 12px">
           Files
         </Link>
       </Container>
 
-      <Container>
+      <Container padding="0" flex="1 0 200px">
         <ThemeSwitcher />
       </Container>
     </Container>
