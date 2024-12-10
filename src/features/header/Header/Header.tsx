@@ -1,7 +1,7 @@
 "use client";
 
-import { Container } from "@chakra-ui/react";
-import { Link } from "@chakra-ui/react";
+import { Container, Link } from "@chakra-ui/react";
+import { ThemeSwitcher } from "../../../components/ui/theme-switcher";
 
 export function Header() {
   return (
@@ -15,6 +15,10 @@ export function Header() {
         <Link href="/files" p="12px 24px">
           Files
         </Link>
+      </Container>
+
+      <Container>
+        <ThemeSwitcher />
       </Container>
     </Container>
   );

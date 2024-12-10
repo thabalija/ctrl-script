@@ -2,14 +2,18 @@
 
 import { Button, Container } from "@chakra-ui/react";
 import { Theme } from "@monaco-editor/react";
+import { useTheme } from "next-themes";
 import { useState } from "react";
 import { CodeEditor } from "../../features/editor/CodeEditor/CodeEditor";
 import { FileDiff } from "../../features/editor/FileDiff/FileDiff";
 
 export default function Editor() {
+  const { theme } = useTheme();
+
+  const codeTheme: Theme = theme === "dark" ? "vs-dark" : "light";
+
   const original = "banana, apple, orange";
   const language = "javascript";
-  const theme: Theme = "vs-dark";
   const [script, setScript] = useState<string | undefined>(defaultScript);
   const [modified, setModified] = useState(original);
 
@@ -31,7 +35,7 @@ export default function Editor() {
       <CodeEditor
         script={script}
         language={language}
-        theme={theme}
+        theme={codeTheme}
         handleScriptChange={handleScriptChange}
       />
       <br />
@@ -41,7 +45,7 @@ export default function Editor() {
       <FileDiff
         original={original}
         modified={modified}
-        theme={theme}
+        theme={codeTheme}
         language={language}
       />
     </Container>
