@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Container } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 import { Theme } from "@monaco-editor/react";
 import { useTheme } from "next-themes";
 import { useState } from "react";
@@ -31,7 +31,7 @@ export default function Editor() {
   }
 
   return (
-    <Container>
+    <>
       <CodeEditor
         script={script}
         language={language}
@@ -39,16 +39,16 @@ export default function Editor() {
         handleScriptChange={handleScriptChange}
       />
       <br />
-      <Button onClick={executeValue}>Execute value</Button>
-      <br />
-      <br />
+      <Button mb="12px" onClick={executeValue}>
+        Execute value
+      </Button>
       <FileDiff
         original={original}
         modified={modified}
         theme={codeTheme}
         language={language}
       />
-    </Container>
+    </>
   );
 }
 

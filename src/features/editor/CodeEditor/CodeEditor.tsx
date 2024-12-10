@@ -18,7 +18,7 @@ export function CodeEditor({
   return (
     <>
       <Editor
-        height="40vh"
+        height="35vh"
         defaultValue={script}
         language={language}
         theme={theme}

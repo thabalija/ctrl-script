@@ -24,7 +24,7 @@ export function FileDiff({
 
   return (
     <DiffEditor
-      height="40vh"
+      height="35vh"
       language={language}
       theme={theme}
       modified={modified}
