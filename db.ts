@@ -5,14 +5,17 @@ interface FileItem {
   name: string;
   extension: string;
   file: File;
+  versions: Array<File>;
 }
 
-const db = new Dexie("FileItems") as Dexie & {
-  fileItems: EntityTable<FileItem, "id">;
+const db = new Dexie("CTRLScriptData") as Dexie & {
+  files: EntityTable<FileItem, "id">;
+  scripts: EntityTable<FileItem, "id">;
 };
 
 db.version(1).stores({
-  fileItems: "++id, name, extension, file",
+  files: "++id, name, extension, file, versions",
+  scripts: "++id, name, extension, file, versions",
 });
 
 export type { FileItem };

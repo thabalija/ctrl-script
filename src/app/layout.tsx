@@ -1,8 +1,8 @@
 import { Provider } from "@/components/ui/provider";
+import { Container } from "@chakra-ui/react";
 import type { Metadata } from "next";
 import { Footer } from "../features/footer/Footer/Footer";
 import { Header } from "../features/header/Header/Header";
-import { Container } from "@chakra-ui/react";
 
 export const metadata: Metadata = {
   title: "CTRL script",
