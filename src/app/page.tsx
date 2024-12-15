@@ -1,9 +1,7 @@
 "use client";
 
+import HomeContainer from "../features/home-container/HomeContainer/HomeContainer";
+
 export default function Home() {
-  return (
-    <>
-      <h1>Welcome to CTRL Script!</h1>
-    </>
-  );
+  return <HomeContainer />;
 }
