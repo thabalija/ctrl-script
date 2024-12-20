@@ -1,7 +1,13 @@
 "use client";
 
-import HomeContainer from "../features/home-container/HomeContainer/HomeContainer";
+import HomeHero from "./components/HomeHero/HomeHero";
+import KeyFeatures from "./components/KeyFeatures/KeyFeatures";
 
 export default function Home() {
-  return <HomeContainer />;
+  return (
+    <>
+      <HomeHero />
+      <KeyFeatures />
+    </>
+  );
 }

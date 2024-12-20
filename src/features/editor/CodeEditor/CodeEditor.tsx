@@ -1,5 +1,6 @@
 "use client";
 
+import { Container } from "@chakra-ui/react";
 import Editor, { Theme } from "@monaco-editor/react";
 
 export interface ICodeEditorProps {
@@ -16,14 +17,15 @@ export function CodeEditor({
   handleScriptChange,
 }: ICodeEditorProps) {
   return (
-    <>
+    <Container padding={0} minW="400px">
       <Editor
-        height="35vh"
-        defaultValue={script}
+        height="40vh"
+        width="70%"
+        value={script}
         language={language}
         theme={theme}
         onChange={(value) => handleScriptChange(value)}
       />
-    </>
+    </Container>
   );
 }

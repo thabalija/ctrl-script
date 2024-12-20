@@ -1,23 +1,27 @@
 "use client";
 
 import { Container, Heading, Text } from "@chakra-ui/react";
-import { FileUpload } from "../../file-upload/FileUpload/FileUpload";
 import { db } from "../../../../db";
-
+import { FileSelect } from "../../../features/file-upload/FileSelect/FileSelect";
+import { redirect } from "next/navigation";
 export default function HomeHero() {
   async function onAddFiles(fileList: FileList | null) {
     if (!fileList?.length) {
       return;
     }
 
-    Array.from(fileList).forEach(async (file) => {
+    const files = Array.from(fileList);
+
+    for (const file of files) {
       await db.files.add({
         name: file.name,
         extension: file.name.split(".").pop() || "",
         file: file,
         versions: [file],
       });
-    });
+    }
+
+    redirect("/files");
   }
 
   return (
@@ -30,7 +34,7 @@ export default function HomeHero() {
         file modifications and data extraction. Write powerful scripts, and
         apply them across multiple files.
       </Text>
-      <FileUpload onAddFiles={onAddFiles} />
+      <FileSelect onAddFiles={onAddFiles} />
     </Container>
   );
 }

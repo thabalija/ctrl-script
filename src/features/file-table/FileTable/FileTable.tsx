@@ -1,27 +1,20 @@
 "use client";
 
-import { db, FileItem } from "../../../../db";
+import { FileItem } from "../../../../db";
 
 import { IconButton, Link, Table } from "@chakra-ui/react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { FaDownload, FaRegPenToSquare } from "react-icons/fa6";
+import { downloadFile } from "../../../helpers/download-file";
 
-export interface IFilesTableProps {
+export interface IFileTableProps {
   files?: Array<FileItem>;
+  onDeleteFileItem: (fileItem: FileItem) => void;
 }
 
-export function FilesTable({ files }: IFilesTableProps) {
-  function onDeleteFileItem(fileItem: FileItem) {
-    db.files.delete(fileItem.id);
-  }
-
+export function FileTable({ files, onDeleteFileItem }: IFileTableProps) {
   function onDownloadFileItem(fileItem: FileItem) {
-    const url = URL.createObjectURL(fileItem.file);
-    const downloadLink = document.createElement("a");
-    downloadLink.href = url;
-    downloadLink.download = `${fileItem.name}.${fileItem.extension}`;
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
+    downloadFile(fileItem.file, `${fileItem.name}.${fileItem.extension}`);
   }
 
   const emptyState = <p>Loading...</p>;
