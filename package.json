@@ -13,6 +13,7 @@
     "@chakra-ui/react": "^3.2.3",
     "@emotion/react": "^11.14.0",
     "@monaco-editor/react": "^4.6.0",
+    "@zip.js/zip.js": "^2.7.54",
     "dexie": "^4.0.10",
     "dexie-react-hooks": "^1.1.7",
     "next": "15.0.3",
