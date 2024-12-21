@@ -1,10 +1,10 @@
 "use client";
 
-import { Container, Heading, HStack } from "@chakra-ui/react";
+import { Container, Flex, Heading, HStack } from "@chakra-ui/react";
 import { MdAutoGraph } from "react-icons/md";
 import { SlChemistry } from "react-icons/sl";
 import { TbDatabase } from "react-icons/tb";
-import IconCard from "../../../components/IconCard/IconCard";
+import IconCard from "../../../core/IconCard/IconCard";
 
 export default function KeyFeatures() {
   const cards = [
@@ -26,18 +26,19 @@ export default function KeyFeatures() {
     },
   ];
   return (
-    <Container textAlign="center" maxWidth="1200px">
-      <Heading as="h1" mb="32px">
+    <Container textAlign="center" maxWidth="1200px" padding="24px">
+      <Heading as="h1" mb="48px" size="3xl">
         KeyFeatures
       </Heading>
-      <HStack alignItems="stretch" justifyContent="space-between">
+      <HStack alignItems="stretch" justifyContent="space-between" gap="8">
         {cards.map((card) => (
-          <IconCard
-            key={card.title}
-            title={card.title}
-            description={card.description}
-            icon={card.icon}
-          />
+          <Flex key={card.title} flex="1" alignItems="stretch">
+            <IconCard
+              title={card.title}
+              description={card.description}
+              icon={card.icon}
+            />
+          </Flex>
         ))}
       </HStack>
     </Container>
