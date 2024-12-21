@@ -10,11 +10,16 @@ import { FileDropzone } from "../../features/file-upload/FileDropzone/FileDropzo
 import { compressFiles } from "../../helpers/compress-files";
 import { downloadFile } from "../../helpers/download-file";
 import { importFiles } from "../../helpers/import-files";
+import { FaRegTrashAlt } from "react-icons/fa";
 
 export default function Scripts() {
   const scripts = useLiveQuery(() => db.scripts.toArray());
   function onDeleteScript(fileItem: FileItem) {
     db.scripts.delete(fileItem.id);
+  }
+
+  function onRemoveScripts() {
+    db.scripts.clear();
   }
 
   async function onAddScripts(fileList: FileList | null) {
@@ -41,6 +46,9 @@ export default function Scripts() {
         <FileTable files={scripts} onDeleteFileItem={onDeleteScript} />
       </Box>
       <Flex justifyContent="end" margin="32px 0">
+        <Button colorPalette="red" variant="ghost" onClick={onRemoveScripts}>
+          <FaRegTrashAlt /> Remove all
+        </Button>
         <Button
           colorPalette="green"
           variant="solid"
