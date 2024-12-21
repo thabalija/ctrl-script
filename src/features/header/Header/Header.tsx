@@ -8,7 +8,7 @@ export function Header() {
     <Container
       display={"flex"}
       justifyContent={"space-between"}
-      padding="12px 0"
+      padding="12px 24px"
     >
       <Container padding="0" flex="1 0 120px">
         <Link href="/" p="4px 12px">

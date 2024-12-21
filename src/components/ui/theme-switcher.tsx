@@ -1,10 +1,11 @@
 // app/components/ThemeSwitcher.tsx
 "use client";
 
-import { Container, Text } from "@chakra-ui/react";
-import { Switch } from "./switch";
+import { Container, Icon } from "@chakra-ui/react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import { FiMoon, FiSun } from "react-icons/fi";
+import { Switch } from "./switch";
 
 export function ThemeSwitcher() {
   const [mounted, setMounted] = useState(false);
@@ -22,8 +23,23 @@ export function ThemeSwitcher() {
 
   return (
     <Container display="flex" p="0" justifyContent="flex-end">
-      <Text mr="12px">Dark mode</Text>
-      <Switch checked={theme === "dark"} onCheckedChange={toggleTheme} />
+      <Switch
+        size="lg"
+        checked={theme === "dark"}
+        onCheckedChange={toggleTheme}
+        trackLabel={{
+          on: (
+            <Icon color="yellow.400">
+              <FiSun />
+            </Icon>
+          ),
+          off: (
+            <Icon color="gray.400">
+              <FiMoon />
+            </Icon>
+          ),
+        }}
+      />
     </Container>
   );
 }

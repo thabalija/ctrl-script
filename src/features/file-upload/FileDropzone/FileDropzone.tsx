@@ -13,7 +13,6 @@ interface IFileUploadDropzoneProps {
 export function FileDropzone({ onAddFiles }: IFileUploadDropzoneProps) {
   return (
     <FileUploadRoot
-      maxW="xl"
       maxFiles={10000}
       alignItems="stretch"
       onChange={(e: ChangeEvent<HTMLInputElement>) =>
