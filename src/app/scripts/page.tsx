@@ -1,13 +1,15 @@
 "use client";
 
-import { Box, Button, Container, Heading } from "@chakra-ui/react";
+import { Box, Button, Container, Flex, Heading, Text } from "@chakra-ui/react";
 import { useLiveQuery } from "dexie-react-hooks";
+import { LuHardDriveDownload } from "react-icons/lu";
 import { db, FileItem } from "../../../db";
+import { Loader } from "../../core/loader/Loader";
 import { FileTable } from "../../features/file-table/FileTable/FileTable";
 import { FileDropzone } from "../../features/file-upload/FileDropzone/FileDropzone";
-import { importFiles } from "../../helpers/import-files";
 import { compressFiles } from "../../helpers/compress-files";
 import { downloadFile } from "../../helpers/download-file";
+import { importFiles } from "../../helpers/import-files";
 
 export default function Scripts() {
   const scripts = useLiveQuery(() => db.scripts.toArray());
@@ -28,15 +30,41 @@ export default function Scripts() {
     downloadFile(compressedFile, "files.zip");
   }
 
+  const isLoading = scripts === undefined;
+
+  const tableContent = scripts?.length ? (
+    <>
+      <Box margin="32px 0">
+        <Heading as="h1" marginBottom="24px">
+          Scripts
+        </Heading>
+        <FileTable files={scripts} onDeleteFileItem={onDeleteScript} />
+      </Box>
+      <Flex justifyContent="end" margin="32px 0">
+        <Button
+          colorPalette="green"
+          variant="solid"
+          onClick={onDownloadAllFiles}
+        >
+          <LuHardDriveDownload /> Download all
+        </Button>
+      </Flex>
+    </>
+  ) : (
+    <Text margin="72px 0" textAlign="center">
+      No scripts added. Start by selecting some scripts.
+    </Text>
+  );
+
+  const pageContent = isLoading ? <Loader /> : tableContent;
+
   return (
-    <Container>
+    <Container maxWidth="900px">
       <Box mt="32px" mb="32px">
         <FileDropzone onAddFiles={onAddScripts} />
       </Box>
-      <Heading as="h1">Scripts</Heading>
-      <FileTable files={scripts} onDeleteFileItem={onDeleteScript} />
 
-      <Button onClick={onDownloadAllFiles}>Download all scripts</Button>
+      {pageContent}
     </Container>
   );
 }
