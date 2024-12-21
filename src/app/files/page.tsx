@@ -1,11 +1,13 @@
 "use client";
 
 import { Button, Container, Flex, Heading } from "@chakra-ui/react";
-import * as zip from "@zip.js/zip.js";
 import { useLiveQuery } from "dexie-react-hooks";
 import { db, FileItem } from "../../../db";
-import { FileDropzone } from "../../features/file-upload/FileDropzone/FileDropzone";
 import { FileTable } from "../../features/file-table/FileTable/FileTable";
+import { FileDropzone } from "../../features/file-upload/FileDropzone/FileDropzone";
+import { compressFiles } from "../../helpers/compress-files";
+import { downloadFile } from "../../helpers/download-file";
+import { importFiles } from "../../helpers/import-files";
 
 export default function FilesContainer() {
   const files = useLiveQuery(() => db.files.toArray());
@@ -14,66 +16,16 @@ export default function FilesContainer() {
   }
 
   async function onAddFiles(fileList: FileList | null) {
-    if (!fileList?.length) {
-      return;
-    }
-
-    Array.from(fileList).forEach(async (file) => {
-      const fileNameParts = file.name.split(".");
-      const extension = fileNameParts.pop() || "txt";
-      const name = fileNameParts.join("");
-
-      await db.files.add({
-        name,
-        extension,
-        file,
-        versions: [file],
-      });
-    });
+    await importFiles(fileList, db.files);
   }
 
   async function onDownloadAllFiles() {
-    const zipWriter = new zip.ZipWriter(new zip.BlobWriter("application/zip"), {
-      bufferedWrite: true,
-    });
-
-    const fileList = files || [];
-    const zipFileNames: Array<string> = [];
-
-    for (const file of fileList) {
-      let fileForDownload = file.file;
-
-      const zipContainsFileWithSameName = Boolean(
-        zipFileNames.find((fileName) => fileName === fileForDownload.name),
-      );
-
-      if (zipContainsFileWithSameName) {
-        fileForDownload = renameFile(
-          file.file,
-          `${file.name}_modified.${file.extension}`,
-        );
-      }
-
-      zipFileNames.push(fileForDownload.name);
-      await zipWriter.add(
-        fileForDownload.name,
-        new zip.BlobReader(fileForDownload),
-      );
+    if (!files?.length) {
+      return;
     }
 
-    const blobURL = URL.createObjectURL(await zipWriter.close());
-    const downloadLink = document.createElement("a");
-    downloadLink.href = blobURL;
-    downloadLink.download = "files.zip";
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-  }
-
-  function renameFile(originalFile: File, newName: string): File {
-    return new File([originalFile], newName, {
-      type: originalFile.type,
-      lastModified: originalFile.lastModified,
-    });
+    const compressedFile = await compressFiles(files);
+    downloadFile(compressedFile, "files.zip");
   }
 
   return (

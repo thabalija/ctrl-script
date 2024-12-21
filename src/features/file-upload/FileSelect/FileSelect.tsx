@@ -1,7 +1,7 @@
 "use client";
 
 import { FileUploadRoot, FileUploadTrigger } from "@/components/ui/file-upload";
-import { Button } from "@chakra-ui/react";
+import { Button, Container, Text } from "@chakra-ui/react";
 import { ChangeEvent } from "react";
 import { HiUpload } from "react-icons/hi";
 
@@ -18,8 +18,22 @@ export function FileSelect({ onAddFiles }: IFileUploadDropzoneProps) {
       }
     >
       <FileUploadTrigger asChild>
-        <Button variant="outline" size="sm">
-          <HiUpload /> Upload file
+        <Button
+          variant="outline"
+          rounded="full"
+          padding={"12px"}
+          height={"auto"}
+        >
+          <Text fontSize="18px" color={"gray.500"}>
+            Start by selecting files...
+          </Text>
+          <Container
+            borderRadius={"50px"}
+            background={"purple.500"}
+            padding={2}
+          >
+            <HiUpload color="white" height="48px" width="48px" />
+          </Container>
         </Button>
       </FileUploadTrigger>
     </FileUploadRoot>

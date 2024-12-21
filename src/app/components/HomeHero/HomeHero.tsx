@@ -1,26 +1,14 @@
 "use client";
 
 import { Container, Heading, Text } from "@chakra-ui/react";
+import { redirect } from "next/navigation";
 import { db } from "../../../../db";
 import { FileSelect } from "../../../features/file-upload/FileSelect/FileSelect";
-import { redirect } from "next/navigation";
+import { importFiles } from "../../../helpers/import-files";
+
 export default function HomeHero() {
   async function onAddFiles(fileList: FileList | null) {
-    if (!fileList?.length) {
-      return;
-    }
-
-    const files = Array.from(fileList);
-
-    for (const file of files) {
-      await db.files.add({
-        name: file.name,
-        extension: file.name.split(".").pop() || "",
-        file: file,
-        versions: [file],
-      });
-    }
-
+    await importFiles(fileList, db.files);
     redirect("/files");
   }
 

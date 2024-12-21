@@ -17,7 +17,12 @@ export default function RootLayout({
     <html suppressHydrationWarning lang="en">
       <body>
         <Provider>
-          <Container minHeight="100vh" display="flex" flexDirection="column">
+          <Container
+            minHeight="100vh"
+            display="flex"
+            flexDirection="column"
+            padding="0"
+          >
             <Header />
             <Container flex="1" padding="0" marginTop="24px">
               {children}
