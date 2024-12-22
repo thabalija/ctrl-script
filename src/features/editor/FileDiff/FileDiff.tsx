@@ -22,6 +22,7 @@ export function FileDiff({ original, modified, language }: IFileDiffProps) {
           modified={modified}
           original={original}
           theme={theme === "dark" ? "vs-dark" : "light"}
+          options={{ readOnly: true }}
         />
       </Box>
     </Container>

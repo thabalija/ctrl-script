@@ -5,7 +5,6 @@ interface FileItem {
   name: string;
   extension: string;
   file: File;
-  versions: Array<File>;
 }
 
 const db = new Dexie("CTRLScriptData") as Dexie & {
@@ -18,5 +17,5 @@ db.version(1).stores({
   scripts: "++id, name, extension, file, versions",
 });
 
-export type { FileItem };
 export { db };
+export type { FileItem };

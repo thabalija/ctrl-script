@@ -44,6 +44,5 @@ async function addEntityToEntityTable(
     name,
     extension,
     file,
-    versions: [file],
   });
 }
