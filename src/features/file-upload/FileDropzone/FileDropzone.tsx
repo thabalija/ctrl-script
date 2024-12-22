@@ -22,6 +22,7 @@ export function FileDropzone({ onAddFiles }: IFileUploadDropzoneProps) {
       <FileUploadDropzone
         label="Drag and drop files here"
         description="Select any text file"
+        onDrop={(e) => onAddFiles(e.dataTransfer.files)}
       />
     </FileUploadRoot>
   );
