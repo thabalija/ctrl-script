@@ -37,32 +37,33 @@ export default function Scripts() {
 
   const isLoading = scripts === undefined;
 
-  const tableContent = scripts?.length ? (
-    <>
-      <Box margin="32px 0">
-        <Heading as="h1" marginBottom="24px">
-          Scripts
-        </Heading>
-        <FileTable files={scripts} onDeleteFileItem={onDeleteScript} />
-      </Box>
-      <Flex justifyContent="end" margin="32px 0">
-        <Button colorPalette="red" variant="ghost" onClick={onRemoveScripts}>
-          <FaRegTrashAlt /> Remove all
-        </Button>
-        <Button
-          colorPalette="green"
-          variant="solid"
-          onClick={onDownloadAllFiles}
-        >
-          <LuHardDriveDownload /> Download all
-        </Button>
-      </Flex>
-    </>
-  ) : (
-    <Text margin="72px 0" textAlign="center">
-      No scripts added. Start by selecting some scripts.
-    </Text>
-  );
+  const tableContent =
+    !isLoading && scripts.length ? (
+      <>
+        <Box margin="32px 0">
+          <Heading as="h1" marginBottom="24px">
+            Scripts
+          </Heading>
+          <FileTable files={scripts} onDeleteFileItem={onDeleteScript} />
+        </Box>
+        <Flex justifyContent="end" margin="32px 0" gap="4">
+          <Button colorPalette="red" variant="ghost" onClick={onRemoveScripts}>
+            <FaRegTrashAlt /> Remove all
+          </Button>
+          <Button
+            colorPalette="green"
+            variant="solid"
+            onClick={onDownloadAllFiles}
+          >
+            <LuHardDriveDownload /> Download all
+          </Button>
+        </Flex>
+      </>
+    ) : (
+      <Text margin="72px 0" textAlign="center">
+        No scripts added. Start by selecting some scripts.
+      </Text>
+    );
 
   const pageContent = isLoading ? <Loader /> : tableContent;
 

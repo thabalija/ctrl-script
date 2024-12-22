@@ -1,35 +1,29 @@
 "use client";
 
-import { DiffEditor, MonacoDiffEditor, Theme } from "@monaco-editor/react";
-import { useRef } from "react";
+import { Box, Container } from "@chakra-ui/react";
+import { DiffEditor } from "@monaco-editor/react";
+import { useTheme } from "next-themes";
 
 interface IFileDiffProps {
   original: string;
   modified: string;
-  theme: Theme;
   language: string;
 }
 
-export function FileDiff({
-  original,
-  modified,
-  theme,
-  language,
-}: IFileDiffProps) {
-  const diffEditorRef = useRef<MonacoDiffEditor>();
-
-  function handleDiffEditorDidMount(editor: MonacoDiffEditor) {
-    diffEditorRef.current = editor;
-  }
+export function FileDiff({ original, modified, language }: IFileDiffProps) {
+  const { theme } = useTheme();
 
   return (
-    <DiffEditor
-      height="35vh"
-      language={language}
-      theme={theme}
-      modified={modified}
-      original={original}
-      onMount={handleDiffEditorDidMount}
-    />
+    <Container padding="0">
+      <Box height="40vh" width="100%">
+        <DiffEditor
+          height="100%"
+          language={language}
+          modified={modified}
+          original={original}
+          theme={theme === "dark" ? "vs-dark" : "light"}
+        />
+      </Box>
+    </Container>
   );
 }

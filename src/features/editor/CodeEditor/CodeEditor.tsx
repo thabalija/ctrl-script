@@ -1,31 +1,33 @@
 "use client";
 
-import { Container } from "@chakra-ui/react";
-import Editor, { Theme } from "@monaco-editor/react";
+import { Box, Container } from "@chakra-ui/react";
+import Editor from "@monaco-editor/react";
+import { useTheme } from "next-themes";
 
 export interface ICodeEditorProps {
   script?: string;
   language: string;
-  theme: Theme;
   handleScriptChange: (value: string | undefined) => void;
 }
 
 export function CodeEditor({
   script,
   language,
-  theme,
   handleScriptChange,
 }: ICodeEditorProps) {
+  const { theme } = useTheme();
+
   return (
-    <Container padding={0} minW="400px">
-      <Editor
-        height="40vh"
-        width="70%"
-        value={script}
-        language={language}
-        theme={theme}
-        onChange={(value) => handleScriptChange(value)}
-      />
+    <Container padding="0">
+      <Box height="40vh" width="100%">
+        <Editor
+          height="100%"
+          value={script}
+          language={language}
+          theme={theme === "dark" ? "vs-dark" : "light"}
+          onChange={(value) => handleScriptChange(value)}
+        />
+      </Box>
     </Container>
   );
 }
