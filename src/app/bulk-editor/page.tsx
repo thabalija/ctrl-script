@@ -1,19 +1,13 @@
 "use client";
 
 import { Button } from "@chakra-ui/react";
-import { Theme } from "@monaco-editor/react";
 import { useLiveQuery } from "dexie-react-hooks";
-import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { db } from "../../../db";
 import { CodeEditor } from "../../features/editor/CodeEditor/CodeEditor";
 import { FileDiff } from "../../features/editor/FileDiff/FileDiff";
 
 export default function BulkEditor() {
-  const { theme } = useTheme();
-
-  const codeTheme: Theme = theme === "dark" ? "vs-dark" : "light";
-
   const fileList = useLiveQuery(() => db.files.toArray()) || [];
 
   const [original, setOriginal] = useState("");
@@ -47,7 +41,6 @@ export default function BulkEditor() {
       <CodeEditor
         script={script}
         language={language}
-        theme={codeTheme}
         handleScriptChange={handleScriptChange}
       />
       <br />
@@ -55,12 +48,7 @@ export default function BulkEditor() {
         Execute value
       </Button>
       <br />
-      <FileDiff
-        original={original}
-        modified={modified}
-        theme={codeTheme}
-        language={language}
-      />
+      <FileDiff original={original} modified={modified} language={language} />
     </>
   );
 }
