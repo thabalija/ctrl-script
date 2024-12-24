@@ -11,7 +11,7 @@ export function Header() {
     { path: "/files/", label: "Files" },
     { path: "/scripts/", label: "Scripts" },
     { path: "/editor/", label: "Editor" },
-    { path: "/bulk-editor/", label: "Bulk Editor" },
+    { path: "/report-generator/", label: "Report Generator" },
   ];
 
   return (

@@ -17,18 +17,22 @@ export interface IDropdownOption<T> {
 
 export interface IDropdownProps<T> {
   label?: string;
+  multiple: boolean;
   onValueChange: (value: Array<T>) => unknown;
   options: Array<IDropdownOption<T>>;
   placeholder?: string;
   selectedValues: Array<T>;
+  compareValues?: (a: T, b: T) => boolean;
 }
 
 export function Dropdown<T>({
   label,
-  onValueChange,
+  multiple,
   options,
   placeholder,
   selectedValues,
+  onValueChange,
+  compareValues,
 }: IDropdownProps<T>) {
   function onItemSelect(selectedValues: Array<string>) {
     const selectedRawValues = selectedValues.map(
@@ -48,7 +52,9 @@ export function Dropdown<T>({
   const selectedOptionIndexes = selectedValues.map((selectedValue) =>
     selectOptions.items
       .findIndex((option) => {
-        return option.rawValue === selectedValue;
+        return compareValues
+          ? compareValues(option.rawValue, selectedValue)
+          : option.rawValue === selectedValue;
       })
       .toString(),
   );
@@ -56,8 +62,9 @@ export function Dropdown<T>({
   return (
     <SelectRoot
       collection={selectOptions}
-      width="320px"
+      multiple={multiple}
       value={selectedOptionIndexes}
+      width="320px"
       onValueChange={(e) => onItemSelect(e.value)}
     >
       {label ? <SelectLabel>{label}</SelectLabel> : null}

@@ -2,6 +2,8 @@
 
 import { Box, Button, Container, Flex, Heading, Text } from "@chakra-ui/react";
 import { useLiveQuery } from "dexie-react-hooks";
+import { redirect } from "next/navigation";
+import { useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { LuHardDriveDownload } from "react-icons/lu";
 import { db, FileItem } from "../../../db";
@@ -14,25 +16,44 @@ import { importFiles } from "../../helpers/import-files";
 
 export default function FilesContainer() {
   const files = useLiveQuery(() => db.files.toArray());
+  const [selectedFileIds, setSelectedFileIds] = useState<number[]>([]);
+
   function onDeleteFile(fileItem: FileItem) {
     db.files.delete(fileItem.id);
   }
 
   function onRemoveFiles() {
-    db.files.clear();
+    if (!selectedFileIds.length) {
+      db.files.clear();
+      return;
+    }
+
+    db.files.bulkDelete(selectedFileIds);
   }
 
   async function onAddFiles(fileList: FileList | null) {
     await importFiles(fileList, db.files);
   }
 
-  async function onDownloadAllFiles() {
+  async function onDownloadFiles() {
     if (!files?.length) {
       return;
     }
 
-    const compressedFile = await compressFiles(files);
+    const filesToDownload = selectedFileIds.length
+      ? files.filter((file) => selectedFileIds.includes(file.id))
+      : files;
+
+    const compressedFile = await compressFiles(filesToDownload);
     downloadFile(compressedFile, "files.zip");
+  }
+
+  function onEditFileItem(id: number) {
+    redirect(`/editor?fileId=${id}`);
+  }
+
+  function onSelectFileItems(ids: Array<number>) {
+    setSelectedFileIds(ids);
   }
 
   const isLoading = files === undefined;
@@ -42,20 +63,32 @@ export default function FilesContainer() {
       <>
         <Box margin="32px 0">
           <Heading as="h1" marginBottom="24px">
-            Files
+            Files ({files.length})
           </Heading>
-          <FileTable files={files} onDeleteFileItem={onDeleteFile} />
+          <FileTable
+            selectedFileIds={selectedFileIds}
+            files={files}
+            onDeleteFileItem={onDeleteFile}
+            onEditFileItem={onEditFileItem}
+            onSelectFileItems={onSelectFileItems}
+          />
         </Box>
         <Flex justifyContent="end" margin="32px 0" gap="4">
           <Button colorPalette="red" variant="ghost" onClick={onRemoveFiles}>
-            <FaRegTrashAlt /> Remove all
+            <FaRegTrashAlt /> Remove{" "}
+            {selectedFileIds.length && selectedFileIds.length !== files.length
+              ? "selected"
+              : "all"}
           </Button>
           <Button
             colorPalette="green"
             variant="solid"
-            onClick={onDownloadAllFiles}
+            onClick={onDownloadFiles}
           >
-            <LuHardDriveDownload /> Download all
+            <LuHardDriveDownload /> Download{" "}
+            {selectedFileIds.length && selectedFileIds.length !== files.length
+              ? "selected"
+              : "all"}
           </Button>
         </Flex>
       </>

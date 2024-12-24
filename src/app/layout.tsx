@@ -3,6 +3,7 @@ import { Container } from "@chakra-ui/react";
 import type { Metadata } from "next";
 import { Footer } from "../features/footer/Footer/Footer";
 import { Header } from "../features/header/Header/Header";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "CTRL script",
@@ -25,7 +26,7 @@ export default function RootLayout({
           >
             <Header />
             <Container flex="1" padding="0" marginTop="24px">
-              {children}
+              <Suspense>{children}</Suspense>
             </Container>
             <Footer />
           </Container>
