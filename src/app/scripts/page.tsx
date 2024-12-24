@@ -2,6 +2,9 @@
 
 import { Box, Button, Container, Flex, Heading, Text } from "@chakra-ui/react";
 import { useLiveQuery } from "dexie-react-hooks";
+import { redirect } from "next/navigation";
+import { useState } from "react";
+import { FaRegTrashAlt } from "react-icons/fa";
 import { LuHardDriveDownload } from "react-icons/lu";
 import { db, FileItem } from "../../../db";
 import { Loader } from "../../core/loader/Loader";
@@ -10,29 +13,47 @@ import { FileDropzone } from "../../features/file-upload/FileDropzone/FileDropzo
 import { compressFiles } from "../../helpers/compress-files";
 import { downloadFile } from "../../helpers/download-file";
 import { importFiles } from "../../helpers/import-files";
-import { FaRegTrashAlt } from "react-icons/fa";
 
 export default function Scripts() {
   const scripts = useLiveQuery(() => db.scripts.toArray());
+  const [selectedFileItemIds, setSelectedFileItemIds] = useState<number[]>([]);
+
   function onDeleteScript(fileItem: FileItem) {
     db.scripts.delete(fileItem.id);
-  }
-
-  function onRemoveScripts() {
-    db.scripts.clear();
   }
 
   async function onAddScripts(fileList: FileList | null) {
     await importFiles(fileList, db.scripts);
   }
 
-  async function onDownloadAllFiles() {
+  function onRemoveScripts() {
+    if (!selectedFileItemIds.length) {
+      db.scripts.clear();
+      return;
+    }
+
+    db.scripts.bulkDelete(selectedFileItemIds);
+  }
+
+  async function onDownloadScripts() {
     if (!scripts?.length) {
       return;
     }
 
-    const compressedFile = await compressFiles(scripts);
+    const scriptsToDownload = selectedFileItemIds.length
+      ? scripts.filter((file) => selectedFileItemIds.includes(file.id))
+      : scripts;
+
+    const compressedFile = await compressFiles(scriptsToDownload);
     downloadFile(compressedFile, "files.zip");
+  }
+
+  function onEditFileItem(id: number) {
+    redirect(`/editor?scriptId=${id}`);
+  }
+
+  function onSelectFileItems(ids: Array<number>) {
+    setSelectedFileItemIds(ids);
   }
 
   const isLoading = scripts === undefined;
@@ -42,20 +63,34 @@ export default function Scripts() {
       <>
         <Box margin="32px 0">
           <Heading as="h1" marginBottom="24px">
-            Scripts
+            Scripts ({scripts.length})
           </Heading>
-          <FileTable files={scripts} onDeleteFileItem={onDeleteScript} />
+          <FileTable
+            selectedFileIds={selectedFileItemIds}
+            files={scripts}
+            onDeleteFileItem={onDeleteScript}
+            onEditFileItem={onEditFileItem}
+            onSelectFileItems={onSelectFileItems}
+          />
         </Box>
         <Flex justifyContent="end" margin="32px 0" gap="4">
           <Button colorPalette="red" variant="ghost" onClick={onRemoveScripts}>
-            <FaRegTrashAlt /> Remove all
+            <FaRegTrashAlt /> Remove{" "}
+            {selectedFileItemIds.length &&
+            selectedFileItemIds.length !== scripts.length
+              ? "selected"
+              : "all"}
           </Button>
           <Button
             colorPalette="green"
             variant="solid"
-            onClick={onDownloadAllFiles}
+            onClick={onDownloadScripts}
           >
-            <LuHardDriveDownload /> Download all
+            <LuHardDriveDownload /> Download{" "}
+            {selectedFileItemIds.length &&
+            selectedFileItemIds.length !== scripts.length
+              ? "selected"
+              : "all"}
           </Button>
         </Flex>
       </>

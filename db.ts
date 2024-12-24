@@ -1,7 +1,7 @@
 import Dexie, { type EntityTable } from "dexie";
 
 interface FileItem {
-  id: string;
+  id: number;
   name: string;
   extension: string;
   file: File;

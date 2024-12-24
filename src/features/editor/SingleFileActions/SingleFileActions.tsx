@@ -1,22 +1,25 @@
 "use client";
 
-import { Button, HStack, Input } from "@chakra-ui/react";
+import { Button, HStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { FaRegSave } from "react-icons/fa";
 import { FiDownload } from "react-icons/fi";
+import { MdOutlineAddCircleOutline } from "react-icons/md";
 import { db, FileItem } from "../../../../db";
-import { Field } from "../../../components/ui/field";
 import { downloadFile } from "../../../helpers/download-file";
+import { FileMetaForm } from "../../file-meta-form/FileMetaForm/FileMetaForm";
 
 interface ISingleFileActionsProps {
   fileItem?: FileItem;
   newFileContent: string;
   onFileSaved: (fileItem: FileItem) => unknown;
+  onFileCreated: (fileItem: FileItem) => unknown;
 }
 
 export function SingleFileActions({
   fileItem,
   newFileContent,
+  onFileCreated,
   onFileSaved,
 }: ISingleFileActionsProps) {
   const [fileName, setFileName] = useState(fileItem?.name || "");
@@ -44,6 +47,29 @@ export function SingleFileActions({
     onFileSaved(fileItem);
   }
 
+  async function onCreateNewFile() {
+    if (!fileItem) {
+      return;
+    }
+
+    const newFile = new File([newFileContent], fileName, {
+      type: fileItem.file.type,
+    });
+
+    const newFileItem = {
+      extension,
+      name: fileName,
+      file: newFile,
+    };
+
+    const newFileItemIndex = await db.files.add(newFileItem);
+    const newFileItemFromDb = await db.files.get(newFileItemIndex);
+
+    if (newFileItemFromDb) {
+      onFileCreated(newFileItemFromDb);
+    }
+  }
+
   async function onDownload() {
     if (!fileItem) {
       return;
@@ -58,22 +84,13 @@ export function SingleFileActions({
 
   return (
     <HStack marginBottom="6" alignItems="end" gap={4}>
-      <Field label="File name" maxWidth={300}>
-        <Input
-          disabled={!fileItem}
-          placeholder="Enter file name"
-          value={fileName}
-          onChange={(e) => setFileName(e.target.value)}
-        />
-      </Field>
-      <Field label="Extension" maxWidth={300}>
-        <Input
-          disabled={!fileItem}
-          placeholder="Enter extension"
-          value={extension}
-          onChange={(e) => setExtension(e.target.value)}
-        />
-      </Field>
+      <FileMetaForm
+        name={fileName}
+        extension={extension}
+        onNameChange={setFileName}
+        onExtensionChange={setExtension}
+      />
+
       <Button
         colorPalette="purple"
         disabled={!fileItem}
@@ -83,6 +100,15 @@ export function SingleFileActions({
         <FaRegSave />
         Save changes
       </Button>
+      <Button
+        colorPalette="purple"
+        disabled={!fileItem}
+        variant="ghost"
+        onClick={onCreateNewFile}
+      >
+        <MdOutlineAddCircleOutline />
+        Save as new file
+      </Button>
 
       <Button
         colorPalette="purple"
@@ -91,7 +117,7 @@ export function SingleFileActions({
         onClick={onDownload}
       >
         <FiDownload />
-        Download modified
+        Download result
       </Button>
     </HStack>
   );
