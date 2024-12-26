@@ -19,7 +19,14 @@ export default function Scripts() {
   const [selectedFileItemIds, setSelectedFileItemIds] = useState<number[]>([]);
 
   function onDeleteScript(fileItem: FileItem) {
-    db.scripts.delete(fileItem.id);
+    if (selectedFileItemIds.includes(fileItem.id)) {
+      const newSelectedFileItemIds = selectedFileItemIds.filter(
+        (id) => id !== fileItem.id,
+      );
+      setSelectedFileItemIds(newSelectedFileItemIds);
+    }
+
+    db.files.delete(fileItem.id);
   }
 
   async function onAddScripts(fileList: FileList | null) {
@@ -29,10 +36,11 @@ export default function Scripts() {
   function onRemoveScripts() {
     if (!selectedFileItemIds.length) {
       db.scripts.clear();
-      return;
+    } else {
+      db.scripts.bulkDelete(selectedFileItemIds);
     }
 
-    db.scripts.bulkDelete(selectedFileItemIds);
+    setSelectedFileItemIds([]);
   }
 
   async function onDownloadScripts() {
@@ -103,7 +111,7 @@ export default function Scripts() {
   const pageContent = isLoading ? <Loader /> : tableContent;
 
   return (
-    <Container maxWidth="900px">
+    <Container maxWidth="1000px">
       <Box mt="32px" mb="32px">
         <FileDropzone onAddFiles={onAddScripts} />
       </Box>
