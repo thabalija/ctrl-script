@@ -62,6 +62,7 @@ export function SingleFileHeaderActions({
     <HStack marginBottom="6" alignItems="end">
       <Dropdown
         compareValues={(a, b) => a.id === b.id}
+        disabled={!fileOptions.length}
         label="File to modify"
         multiple={false}
         options={fileOptions}
@@ -72,6 +73,7 @@ export function SingleFileHeaderActions({
 
       <Dropdown
         compareValues={(a, b) => a.id === b.id}
+        disabled={!scriptOptions.length}
         label="Script"
         multiple={false}
         options={scriptOptions}
@@ -88,7 +90,7 @@ export function SingleFileHeaderActions({
       </Field>
       <Button
         colorPalette="purple"
-        disabled={!selectedScript}
+        disabled={!selectedScript || !scriptName.length}
         variant="ghost"
         onClick={() => onSaveScript(scriptName)}
       >
@@ -98,6 +100,7 @@ export function SingleFileHeaderActions({
       <Button
         colorPalette="purple"
         variant="ghost"
+        disabled={!scriptName.length}
         onClick={() => onCreateScript(scriptName)}
       >
         <MdOutlineAddCircleOutline />
