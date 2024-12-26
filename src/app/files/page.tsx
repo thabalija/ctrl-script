@@ -8,7 +8,7 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { LuHardDriveDownload, LuListStart } from "react-icons/lu";
 import { db, FileItem } from "../../../db";
 import { Toaster, toaster } from "../../components/ui/toaster";
-import { Loader } from "../../core/MainLoader/Loader";
+import { Loader } from "../../core/Loader/Loader";
 import { Dropdown, IDropdownOption } from "../../core/select/dropdown";
 import { FileTable } from "../../features/file-table/FileTable/FileTable";
 import { FileDropzone } from "../../features/file-upload/FileDropzone/FileDropzone";
