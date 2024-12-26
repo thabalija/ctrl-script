@@ -28,7 +28,6 @@ export function FileTable({
   const [indeterminate, setIndeterminate] = useState(false);
 
   useEffect(() => {
-    console.log("selectedFileIds", selectedFileIds);
     const hasSelection = selectedFileIds.length > 0;
     setIndeterminate(hasSelection && selectedFileIds.length < files.length);
   }, [selectedFileIds, files]);
@@ -83,21 +82,21 @@ export function FileTable({
         </IconButton>
 
         <IconButton
-          colorPalette="green"
-          rounded="full"
-          variant="ghost"
-          onClick={() => onDownloadFileItem(fileItem)}
-        >
-          <FiDownload />
-        </IconButton>
-
-        <IconButton
           colorPalette="red"
           rounded="full"
           variant="ghost"
           onClick={() => onDeleteFileItem(fileItem)}
         >
           <IoMdRemoveCircleOutline />
+        </IconButton>
+
+        <IconButton
+          colorPalette="green"
+          rounded="full"
+          variant="ghost"
+          onClick={() => onDownloadFileItem(fileItem)}
+        >
+          <FiDownload />
         </IconButton>
       </Table.Cell>
     </Table.Row>

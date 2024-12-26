@@ -16,6 +16,7 @@ export interface IDropdownOption<T> {
 }
 
 export interface IDropdownProps<T> {
+  disabled?: boolean;
   label?: string;
   multiple: boolean;
   onValueChange: (value: Array<T>) => unknown;
@@ -26,6 +27,7 @@ export interface IDropdownProps<T> {
 }
 
 export function Dropdown<T>({
+  disabled = false,
   label,
   multiple,
   options,
@@ -62,9 +64,10 @@ export function Dropdown<T>({
   return (
     <SelectRoot
       collection={selectOptions}
+      disabled={disabled}
       multiple={multiple}
       value={selectedOptionIndexes}
-      width="320px"
+      minWidth="200px"
       onValueChange={(e) => onItemSelect(e.value)}
     >
       {label ? <SelectLabel>{label}</SelectLabel> : null}
