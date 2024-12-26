@@ -16,19 +16,26 @@ import { importFiles } from "../../helpers/import-files";
 
 export default function FilesContainer() {
   const files = useLiveQuery(() => db.files.toArray());
-  const [selectedFileIds, setSelectedFileIds] = useState<number[]>([]);
+  const [selectedFileItemIds, setSelectedFileItemIds] = useState<number[]>([]);
 
   function onDeleteFile(fileItem: FileItem) {
+    if (selectedFileItemIds.includes(fileItem.id)) {
+      const newSelectedFileItemIds = selectedFileItemIds.filter(
+        (id) => id !== fileItem.id,
+      );
+      setSelectedFileItemIds(newSelectedFileItemIds);
+    }
+
     db.files.delete(fileItem.id);
   }
 
-  function onRemoveFiles() {
-    if (!selectedFileIds.length) {
+  async function onRemoveFiles() {
+    if (!selectedFileItemIds.length) {
       db.files.clear();
-      return;
+    } else {
+      await db.files.bulkDelete(selectedFileItemIds);
     }
-
-    db.files.bulkDelete(selectedFileIds);
+    setSelectedFileItemIds([]);
   }
 
   async function onAddFiles(fileList: FileList | null) {
@@ -40,8 +47,8 @@ export default function FilesContainer() {
       return;
     }
 
-    const filesToDownload = selectedFileIds.length
-      ? files.filter((file) => selectedFileIds.includes(file.id))
+    const filesToDownload = selectedFileItemIds.length
+      ? files.filter((file) => selectedFileItemIds.includes(file.id))
       : files;
 
     const compressedFile = await compressFiles(filesToDownload);
@@ -53,7 +60,7 @@ export default function FilesContainer() {
   }
 
   function onSelectFileItems(ids: Array<number>) {
-    setSelectedFileIds(ids);
+    setSelectedFileItemIds(ids);
   }
 
   const isLoading = files === undefined;
@@ -66,7 +73,7 @@ export default function FilesContainer() {
             Files ({files.length})
           </Heading>
           <FileTable
-            selectedFileIds={selectedFileIds}
+            selectedFileIds={selectedFileItemIds}
             files={files}
             onDeleteFileItem={onDeleteFile}
             onEditFileItem={onEditFileItem}
@@ -76,7 +83,8 @@ export default function FilesContainer() {
         <Flex justifyContent="end" margin="32px 0" gap="4">
           <Button colorPalette="red" variant="ghost" onClick={onRemoveFiles}>
             <FaRegTrashAlt /> Remove{" "}
-            {selectedFileIds.length && selectedFileIds.length !== files.length
+            {selectedFileItemIds.length &&
+            selectedFileItemIds.length !== files.length
               ? "selected"
               : "all"}
           </Button>
@@ -86,7 +94,8 @@ export default function FilesContainer() {
             onClick={onDownloadFiles}
           >
             <LuHardDriveDownload /> Download{" "}
-            {selectedFileIds.length && selectedFileIds.length !== files.length
+            {selectedFileItemIds.length &&
+            selectedFileItemIds.length !== files.length
               ? "selected"
               : "all"}
           </Button>
@@ -101,7 +110,7 @@ export default function FilesContainer() {
   const pageContent = isLoading ? <Loader /> : tableContent;
 
   return (
-    <Container maxWidth="900px">
+    <Container maxWidth="1000px">
       <Box margin="32px 0">
         <FileDropzone onAddFiles={onAddFiles} />
       </Box>

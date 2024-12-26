@@ -7,6 +7,7 @@ import { FiDownload, FiPenTool } from "react-icons/fi";
 import { IoMdRemoveCircleOutline } from "react-icons/io";
 import { Checkbox } from "../../../components/ui/checkbox";
 import { downloadFile } from "../../../helpers/download-file";
+import { useEffect, useState } from "react";
 
 export interface IFileTableProps {
   selectedFileIds: Array<number>;
@@ -24,8 +25,13 @@ export function FileTable({
   onEditFileItem,
   onSelectFileItems,
 }: IFileTableProps) {
-  const hasSelection = selectedFileIds.length > 0;
-  const indeterminate = hasSelection && selectedFileIds.length < files.length;
+  const [indeterminate, setIndeterminate] = useState(false);
+
+  useEffect(() => {
+    console.log("selectedFileIds", selectedFileIds);
+    const hasSelection = selectedFileIds.length > 0;
+    setIndeterminate(hasSelection && selectedFileIds.length < files.length);
+  }, [selectedFileIds, files]);
 
   function onDownloadFileItem(fileItem: FileItem) {
     downloadFile(fileItem.file, `${fileItem.name}.${fileItem.extension}`);
