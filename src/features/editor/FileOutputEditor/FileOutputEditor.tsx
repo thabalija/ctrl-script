@@ -19,7 +19,14 @@ export function FileOutputEditor({
 
   return (
     <Container padding="0">
-      <Box height="40vh" width="100%">
+      <Box
+        border="1px solid var(--chakra-colors-border)"
+        borderRadius="lg"
+        height="300px"
+        max-height="80vh"
+        overflow="hidden"
+        width="100%"
+      >
         <Editor
           height="100%"
           value={output}

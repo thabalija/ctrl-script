@@ -15,7 +15,14 @@ export function FileDiff({ original, modified, language }: IFileDiffProps) {
 
   return (
     <Container padding="0">
-      <Box height="40vh" width="100%">
+      <Box
+        border="1px solid var(--chakra-colors-border)"
+        borderRadius="lg"
+        height="300px"
+        max-height="80vh"
+        overflow="hidden"
+        width="100%"
+      >
         <DiffEditor
           height="100%"
           language={language}
