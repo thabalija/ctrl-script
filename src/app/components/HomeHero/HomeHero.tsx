@@ -18,7 +18,7 @@ export default function HomeHero() {
         Edit, Apply, and Conquer. Bulk File Scripting Made Simple.
       </Heading>
       <Text as="p" mb="32px">
-        Transform how you manage your files with CodeFusion, the tool for bulk
+        Transform how you manage your files with CTRL Script, the tool for bulk
         file modifications and data extraction. Write powerful scripts, and
         apply them across multiple files.
       </Text>
