@@ -1,12 +1,10 @@
 "use client";
 
 import { Container, Link } from "@chakra-ui/react";
-import { usePathname } from "next/navigation";
 import { ThemeSwitcher } from "../../../components/ui/theme-switcher";
+import { LinkList } from "../LinkList/LinkList";
 
 export function Header() {
-  const pathname = usePathname();
-
   const links = [
     { path: "/files/", label: "Files" },
     { path: "/scripts/", label: "Scripts" },
@@ -35,21 +33,7 @@ export function Header() {
       </Container>
 
       <Container padding="0">
-        {links.map((link) => (
-          <Link
-            fontWeight={pathname === link.path ? "bold" : "normal"}
-            key={link.path}
-            href={link.path}
-            p="4px 12px"
-            color={
-              pathname === link.path
-                ? "purple.500"
-                : { _light: "gray.600", _dark: "gray.300" }
-            }
-          >
-            {link.label}
-          </Link>
-        ))}
+        <LinkList links={links} />
       </Container>
 
       <Container padding="0" flex="1 0 200px">
