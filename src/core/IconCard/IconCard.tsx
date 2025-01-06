@@ -10,7 +10,7 @@ export interface IIconCardProps {
 
 export default function IconCard({ description, icon, title }: IIconCardProps) {
   return (
-    <Card.Root>
+    <Card.Root width="100%">
       <Card.Body alignItems="center" padding="64px 32px">
         <Icon fontSize="48px" mb="32px">
           {icon}

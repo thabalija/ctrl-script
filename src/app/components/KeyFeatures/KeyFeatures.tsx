@@ -1,6 +1,6 @@
 "use client";
 
-import { Container, Flex, Heading, HStack } from "@chakra-ui/react";
+import { Container, Flex, Heading, Stack } from "@chakra-ui/react";
 import { useMemo } from "react";
 import { MdAutoGraph } from "react-icons/md";
 import { SlChemistry } from "react-icons/sl";
@@ -35,7 +35,7 @@ export default function KeyFeatures() {
       <Heading as="h1" mb="48px" size="3xl">
         KeyFeatures
       </Heading>
-      <HStack alignItems="stretch" justifyContent="space-between" gap="8">
+      <Stack direction={["column", "column", "row", "row"]} gap="8">
         {cards.map((card) => (
           <Flex key={card.title} flex="1" alignItems="stretch">
             <IconCard
@@ -45,7 +45,7 @@ export default function KeyFeatures() {
             />
           </Flex>
         ))}
-      </HStack>
+      </Stack>
     </Container>
   );
 }
