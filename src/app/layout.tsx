@@ -30,6 +30,7 @@ export default function RootLayout({
           >
             <PageBackground />
             <Header />
+
             <Container flex="1" padding="0" marginTop="24px">
               <Suspense>{children}</Suspense>
             </Container>
