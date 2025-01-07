@@ -22,6 +22,7 @@ export function FileMetaForm({
         <Input
           placeholder="Enter file name"
           value={name}
+          variant="subtle"
           onChange={(e) => onNameChange(e.target.value)}
         />
       </Field>
@@ -29,6 +30,7 @@ export function FileMetaForm({
         <Input
           placeholder="Enter extension"
           value={extension}
+          variant="subtle"
           onChange={(e) => onExtensionChange(e.target.value)}
         />
       </Field>

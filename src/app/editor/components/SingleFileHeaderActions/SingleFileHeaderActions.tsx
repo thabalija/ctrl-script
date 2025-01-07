@@ -85,6 +85,7 @@ export function SingleFileHeaderActions({
         <Input
           placeholder="Enter name..."
           value={scriptName}
+          variant="subtle"
           onChange={(e) => setScriptName(e.target.value)}
         />
       </Field>

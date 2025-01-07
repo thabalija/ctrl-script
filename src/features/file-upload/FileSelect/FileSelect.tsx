@@ -24,6 +24,8 @@ export function FileSelect({ onAddFiles }: IFileUploadDropzoneProps) {
           padding={"8px 8px 8px 24px"}
           height={"auto"}
           width="100%"
+          background="white"
+          _dark={{ background: "black" }}
         >
           <Flex alignItems="center" justifyContent="space-between" width="100%">
             <Text fontSize="16px" color="gray.500" flex="1" textAlign="left">

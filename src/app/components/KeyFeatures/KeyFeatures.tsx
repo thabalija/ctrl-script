@@ -33,7 +33,7 @@ export default function KeyFeatures() {
   return (
     <Container textAlign="center" maxWidth="1200px" padding="24px">
       <Heading as="h1" mb="48px" size="3xl">
-        KeyFeatures
+        Key Features
       </Heading>
       <Stack direction={["column", "column", "row", "row"]} gap="8">
         {cards.map((card) => (

@@ -15,7 +15,9 @@ export default function IconCard({ description, icon, title }: IIconCardProps) {
         <Icon fontSize="48px" mb="32px">
           {icon}
         </Icon>
-        <Card.Title mb="12px">{title}</Card.Title>
+        <Card.Title mb="12px" textAlign="center">
+          {title}
+        </Card.Title>
         <Card.Description textAlign="center">{description}</Card.Description>
       </Card.Body>
     </Card.Root>
