@@ -33,14 +33,19 @@ export function Header() {
           justifyContent={"space-between"}
           alignItems="center"
           padding="12px 24px"
+          paddingLeft={{ lgDown: "0" }}
         >
           <DrawerTrigger asChild hideFrom={["lg", "xl"]}>
-            <Button variant="ghost" size="sm">
+            <Button variant="ghost">
               <IoMenu />
             </Button>
           </DrawerTrigger>
 
-          <Container padding="0" flex="1 0 150px">
+          <Container
+            padding="0"
+            flex="1 0 150px"
+            textAlign={["center", "center"]}
+          >
             <Logo />
           </Container>
 
@@ -48,7 +53,7 @@ export function Header() {
             <LinkList links={links} />
           </Container>
 
-          <Container padding="0" flex="1 0 200px">
+          <Container padding="0" flex="0">
             <ThemeSwitcher />
           </Container>
         </Container>

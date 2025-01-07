@@ -65,9 +65,10 @@ export function Dropdown<T>({
     <SelectRoot
       collection={selectOptions}
       disabled={disabled}
+      minWidth="200px"
       multiple={multiple}
       value={selectedOptionIndexes}
-      minWidth="200px"
+      variant="subtle"
       onValueChange={(e) => onItemSelect(e.value)}
     >
       {label ? <SelectLabel>{label}</SelectLabel> : null}
