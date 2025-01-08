@@ -1,10 +1,12 @@
 "use client";
 
 import { Link } from "@chakra-ui/react";
+import NextLink from "next/link";
 
 export function Logo() {
   return (
     <Link
+      as={NextLink}
       fontFamily="monospace"
       fontSize="20px"
       fontWeight="bold"

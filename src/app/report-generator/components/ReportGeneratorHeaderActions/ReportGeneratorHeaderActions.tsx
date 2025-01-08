@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, HStack, Input } from "@chakra-ui/react";
+import { Button, HStack, Input, Stack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { FaRegSave } from "react-icons/fa";
 import { MdOutlineAddCircleOutline } from "react-icons/md";
@@ -58,7 +58,11 @@ export function ReportGeneratorHeaderActions({
   }, [files, scripts, selectedScript]);
 
   return (
-    <HStack marginBottom="6" alignItems="end">
+    <Stack
+      marginBottom="6"
+      alignItems={["stretch", "stretch", "stretch", "end"]}
+      direction={["column", "column", "column", "row"]}
+    >
       <Dropdown
         compareValues={(a, b) => a.id === b.id}
         label="Files"
@@ -86,23 +90,25 @@ export function ReportGeneratorHeaderActions({
           onChange={(e) => setScriptName(e.target.value)}
         />
       </Field>
-      <Button
-        colorPalette="purple"
-        disabled={!selectedScript}
-        variant="ghost"
-        onClick={() => onSaveScript(scriptName)}
-      >
-        <FaRegSave />
-        Save script
-      </Button>
-      <Button
-        colorPalette="purple"
-        variant="ghost"
-        onClick={() => onCreateScript(scriptName)}
-      >
-        <MdOutlineAddCircleOutline />
-        Create new script
-      </Button>
-    </HStack>
+      <HStack gap={4} marginTop={4}>
+        <Button
+          colorPalette="purple"
+          disabled={!selectedScript}
+          variant="ghost"
+          onClick={() => onSaveScript(scriptName)}
+        >
+          <FaRegSave />
+          Save script
+        </Button>
+        <Button
+          colorPalette="purple"
+          variant="ghost"
+          onClick={() => onCreateScript(scriptName)}
+        >
+          <MdOutlineAddCircleOutline />
+          Create new script
+        </Button>
+      </HStack>
+    </Stack>
   );
 }

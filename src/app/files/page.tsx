@@ -1,6 +1,13 @@
 "use client";
 
-import { Box, Button, Container, Flex, Heading, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Container,
+  Heading,
+  HStack,
+  Text,
+} from "@chakra-ui/react";
 import { useLiveQuery } from "dexie-react-hooks";
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -143,17 +150,24 @@ export default function FilesContainer() {
             onSelectFileItems={onSelectFileItems}
           />
         </Box>
-        <Flex justifyContent="space-between" margin="32px 0">
-          <Flex gap="4">
-            <Dropdown
-              compareValues={(a, b) => a.id === b.id}
-              onValueChange={(selected) => setSelectedScript(selected[0])}
-              options={scriptOptions}
-              placeholder="Select script"
-              selectedValues={selectedScript ? [selectedScript] : []}
-              multiple={false}
-              disabled={!scripts?.length}
-            />
+        <HStack
+          flexWrap="wrap"
+          justifyContent="space-between"
+          margin="32px 0"
+          gap="4"
+        >
+          <HStack gap="4">
+            <Box maxWidth={"200px"}>
+              <Dropdown
+                compareValues={(a, b) => a.id === b.id}
+                onValueChange={(selected) => setSelectedScript(selected[0])}
+                options={scriptOptions}
+                placeholder="Select script"
+                selectedValues={selectedScript ? [selectedScript] : []}
+                multiple={false}
+                disabled={!scripts?.length}
+              />
+            </Box>
 
             <Button
               colorPalette="purple"
@@ -167,8 +181,8 @@ export default function FilesContainer() {
                 ? "selected"
                 : "all"}
             </Button>
-          </Flex>
-          <Flex gap="4">
+          </HStack>
+          <HStack gap="4">
             <Button colorPalette="red" variant="ghost" onClick={onRemoveFiles}>
               <FaRegTrashAlt /> Remove{" "}
               {selectedFileItemIds.length &&
@@ -187,8 +201,8 @@ export default function FilesContainer() {
                 ? "selected"
                 : "all"}
             </Button>
-          </Flex>
-        </Flex>
+          </HStack>
+        </HStack>
       </>
     ) : (
       <Text margin="72px 0" textAlign="center">

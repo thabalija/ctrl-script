@@ -4,12 +4,13 @@ import {
   Box,
   Button,
   Container,
-  Flex,
   Heading,
-  Text,
+  HStack,
   Link,
+  Text,
 } from "@chakra-ui/react";
 import { useLiveQuery } from "dexie-react-hooks";
+import NextLink from "next/link";
 import { redirect } from "next/navigation";
 import { useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
@@ -107,7 +108,7 @@ export default function Scripts() {
             onSelectFileItems={onSelectFileItems}
           />
         </Box>
-        <Flex justifyContent="end" margin="32px 0" gap="4">
+        <HStack justifyContent="end" margin="32px 0" gap="4">
           <Button colorPalette="red" variant="ghost" onClick={onRemoveScripts}>
             <FaRegTrashAlt /> Remove{" "}
             {selectedFileItemIds.length &&
@@ -126,12 +127,17 @@ export default function Scripts() {
               ? "selected"
               : "all"}
           </Button>
-        </Flex>
+        </HStack>
       </>
     ) : (
       <Text margin="72px 0" textAlign="center">
         No scripts added. Start by importing some scripts or writing one in the{" "}
-        <Link href="/editor" colorPalette="purple" fontWeight="bold">
+        <Link
+          as={NextLink}
+          href="/editor"
+          colorPalette="purple"
+          fontWeight="bold"
+        >
           editor
         </Link>
         .
