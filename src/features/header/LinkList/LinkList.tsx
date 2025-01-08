@@ -6,9 +6,10 @@ import { usePathname } from "next/navigation";
 
 interface ILinkListProps {
   links: Array<{ path: string; label: string }>;
+  onLinkClick?: () => unknown;
 }
 
-export function LinkList({ links }: ILinkListProps) {
+export function LinkList({ links, onLinkClick }: ILinkListProps) {
   const pathname = usePathname();
 
   return (
@@ -25,6 +26,7 @@ export function LinkList({ links }: ILinkListProps) {
               ? "purple.500"
               : { _light: "gray.600", _dark: "gray.300" }
           }
+          onClick={onLinkClick ? () => onLinkClick() : undefined}
         >
           {link.label}
         </Link>
