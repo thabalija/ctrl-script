@@ -1,6 +1,7 @@
 "use client";
 
 import { Link } from "@chakra-ui/react";
+import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 
 interface ILinkListProps {
@@ -14,6 +15,7 @@ export function LinkList({ links }: ILinkListProps) {
     <>
       {links.map((link) => (
         <Link
+          as={NextLink}
           fontWeight={pathname === link.path ? "bold" : "normal"}
           key={link.path}
           href={link.path}

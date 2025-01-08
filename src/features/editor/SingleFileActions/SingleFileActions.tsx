@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, HStack } from "@chakra-ui/react";
+import { Button, Stack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { FaRegSave } from "react-icons/fa";
 import { FiDownload } from "react-icons/fi";
@@ -83,7 +83,12 @@ export function SingleFileActions({
   }
 
   return (
-    <HStack marginBottom="6" alignItems="end" gap={4}>
+    <Stack
+      marginBottom="6"
+      alignItems={["stretch", "stretch", "stretch", "end"]}
+      gap={4}
+      direction={["column", "column", "column", "row"]}
+    >
       <FileMetaForm
         name={fileName}
         extension={extension}
@@ -91,34 +96,41 @@ export function SingleFileActions({
         onExtensionChange={setExtension}
       />
 
-      <Button
-        colorPalette="purple"
-        disabled={!fileItem}
-        variant="solid"
-        onClick={onSave}
+      <Stack
+        alignItems={["start", "start", "start", "end"]}
+        gap={4}
+        direction={"row"}
+        flexWrap={["wrap", "wrap", "wrap", "nowrap"]}
       >
-        <FaRegSave />
-        Save changes
-      </Button>
-      <Button
-        colorPalette="purple"
-        disabled={!fileItem}
-        variant="ghost"
-        onClick={onCreateNewFile}
-      >
-        <MdOutlineAddCircleOutline />
-        Save as new file
-      </Button>
+        <Button
+          colorPalette="purple"
+          disabled={!fileItem}
+          variant="solid"
+          onClick={onSave}
+        >
+          <FaRegSave />
+          Save changes
+        </Button>
+        <Button
+          colorPalette="purple"
+          disabled={!fileItem}
+          variant="ghost"
+          onClick={onCreateNewFile}
+        >
+          <MdOutlineAddCircleOutline />
+          Save as new file
+        </Button>
 
-      <Button
-        colorPalette="purple"
-        disabled={!fileItem}
-        variant="ghost"
-        onClick={onDownload}
-      >
-        <FiDownload />
-        Download result
-      </Button>
-    </HStack>
+        <Button
+          colorPalette="purple"
+          disabled={!fileItem}
+          variant="ghost"
+          onClick={onDownload}
+        >
+          <FiDownload />
+          Download result
+        </Button>
+      </Stack>
+    </Stack>
   );
 }

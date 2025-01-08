@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, HStack } from "@chakra-ui/react";
+import { Button, Stack } from "@chakra-ui/react";
 import { FiDownload } from "react-icons/fi";
 import { FileMetaForm } from "../../../../features/file-meta-form/FileMetaForm/FileMetaForm";
 import { downloadFile } from "../../../../helpers/download-file";
@@ -29,7 +29,13 @@ export function ReportActions({
   }
 
   return (
-    <HStack marginBottom="6" alignItems="end" gap={4}>
+    <Stack
+      alignItems={"end"}
+      direction={"row"}
+      flexWrap={["wrap", "wrap", "wrap", "nowrap"]}
+      gap={4}
+      marginBottom="6"
+    >
       <FileMetaForm
         name={reportName}
         extension={reportExtension}
@@ -40,12 +46,12 @@ export function ReportActions({
       <Button
         colorPalette="purple"
         disabled={!report.length}
-        variant="ghost"
+        variant="solid"
         onClick={onDownload}
       >
         <FiDownload />
-        Download report
+        Download
       </Button>
-    </HStack>
+    </Stack>
   );
 }

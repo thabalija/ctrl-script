@@ -1,6 +1,6 @@
 "use client";
 
-import { Input } from "@chakra-ui/react";
+import { Input, Stack } from "@chakra-ui/react";
 import { Field } from "../../../components/ui/field";
 
 interface IFileMetaFormProps {
@@ -17,7 +17,7 @@ export function FileMetaForm({
   onExtensionChange,
 }: IFileMetaFormProps) {
   return (
-    <>
+    <Stack gap={4} direction="row">
       <Field label="File name" maxWidth={300}>
         <Input
           placeholder="Enter file name"
@@ -34,6 +34,6 @@ export function FileMetaForm({
           onChange={(e) => onExtensionChange(e.target.value)}
         />
       </Field>
-    </>
+    </Stack>
   );
 }
