@@ -5,6 +5,7 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { db, FileItem } from "../../../db";
+import { EDITOR_ROUTE_PARAM } from "../../constants/editor-route-param";
 import { SectionHeader } from "../../core/SectionHeader/SectionHeader";
 import { CodeEditor } from "../../features/editor/CodeEditor/CodeEditor";
 import { FileDiff } from "../../features/editor/FileDiff/FileDiff";
@@ -27,7 +28,7 @@ export default function Editor() {
   const params = useSearchParams();
 
   useEffect(() => {
-    const fileId = params.get("fileId");
+    const fileId = params.get(EDITOR_ROUTE_PARAM.FILE_ID);
     if (fileId) {
       const selectedFile = files.find((file) => file.id === Number(fileId));
       if (selectedFile) {
@@ -35,7 +36,7 @@ export default function Editor() {
       }
     }
 
-    const scriptId = params.get("scriptId");
+    const scriptId = params.get(EDITOR_ROUTE_PARAM.SCRIPT_ID);
     if (scriptId) {
       const selectedScript = scripts.find(
         (script) => script.id === Number(scriptId),
@@ -139,14 +140,14 @@ export default function Editor() {
         onScriptSelect={onScriptSelect}
       />
       <Box marginBottom="8">
-        <CodeEditor script={script} handleScriptChange={setScript} />
+        <CodeEditor script={script} onScriptChange={setScript} />
       </Box>
       <ScriptActions
         original={original}
         currentFileItem={selectedFileFileItem}
         script={script}
         modified={modified}
-        handleModifiedChange={setModified}
+        onModifiedChange={setModified}
       />
       <SectionHeader
         title="File difference"

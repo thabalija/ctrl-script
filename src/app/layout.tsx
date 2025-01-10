@@ -3,7 +3,7 @@ import { Container } from "@chakra-ui/react";
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { Footer } from "../features/footer/Footer/Footer";
-import { Header } from "../features/header/Header/Header";
+import { PageHeader } from "../features/page-header/PageHeader/PageHeader";
 import { PageBackground } from "../features/page-background/PageBackground/PageBackground";
 
 export const metadata: Metadata = {
@@ -29,7 +29,7 @@ export default function RootLayout({
             overflow="hidden"
           >
             <PageBackground />
-            <Header />
+            <PageHeader />
 
             <Container flex="1" padding="0" marginTop="24px">
               <Suspense>{children}</Suspense>

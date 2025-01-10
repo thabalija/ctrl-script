@@ -5,11 +5,12 @@ import { redirect } from "next/navigation";
 import { db } from "../../../../db";
 import { FileSelect } from "../../../features/file-upload/FileSelect/FileSelect";
 import { importFiles } from "../../../helpers/import-files";
+import { ROUTE } from "../../../constants/route";
 
 export default function HomeHero() {
   async function onAddFiles(fileList: FileList | null) {
     await importFiles(fileList, db.files);
-    redirect("/files");
+    redirect(ROUTE.FILES);
   }
 
   return (

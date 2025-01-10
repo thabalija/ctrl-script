@@ -13,6 +13,7 @@ export function PageBackground() {
         color="purple.400"
         transform="rotate(-30deg) scale(25)"
         transition="all 0.3s"
+        boxShadow="120px 5px 0px 0px #FFFFFF"
       >
         <RoundedTriangle />
       </Box>

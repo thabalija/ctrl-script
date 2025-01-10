@@ -6,7 +6,7 @@ import { FaRegSave } from "react-icons/fa";
 import { MdOutlineAddCircleOutline } from "react-icons/md";
 import { FileItem } from "../../../../../db";
 import { Field } from "../../../../components/ui/field";
-import { Dropdown, IDropdownOption } from "../../../../core/select/dropdown";
+import { Dropdown, IDropdownOption } from "../../../../core/Dropdown/Dropdown";
 
 interface IReportGeneratorHeaderActionsProps {
   files: Array<FileItem>;

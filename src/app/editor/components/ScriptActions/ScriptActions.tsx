@@ -11,7 +11,7 @@ interface IScriptActionsProps {
   script: string;
   modified: string;
   original: string;
-  handleModifiedChange: (newModifiedVersion: string) => void;
+  onModifiedChange: (newModifiedVersion: string) => void;
 }
 
 export function ScriptActions({
@@ -19,7 +19,7 @@ export function ScriptActions({
   script,
   modified,
   original,
-  handleModifiedChange,
+  onModifiedChange,
 }: IScriptActionsProps) {
   const [versions, setVersions] = useState<Array<File>>([]);
   const [currentVersionIndex, setCurrentVersionIndex] = useState(0);
@@ -55,7 +55,7 @@ export function ScriptActions({
 
     setVersions([...versions, newFile]);
     setCurrentVersionIndex(currentVersionIndex + 1);
-    handleModifiedChange(result);
+    onModifiedChange(result);
   }
 
   async function undoFileChange() {
@@ -65,7 +65,7 @@ export function ScriptActions({
 
     if (previousVersion) {
       const previousVersionText = await previousVersion.text();
-      handleModifiedChange(previousVersionText);
+      onModifiedChange(previousVersionText);
       setCurrentVersionIndex(currentVersionIndex - 1);
     }
   }
@@ -77,7 +77,7 @@ export function ScriptActions({
 
     if (nextVersion) {
       const previousVersionText = await nextVersion.text();
-      handleModifiedChange(previousVersionText);
+      onModifiedChange(previousVersionText);
       setCurrentVersionIndex(currentVersionIndex + 1);
     }
   }
