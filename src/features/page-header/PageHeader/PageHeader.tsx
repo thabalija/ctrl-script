@@ -13,17 +13,18 @@ import { Container, DrawerTitle, VStack } from "@chakra-ui/react";
 import { useState } from "react";
 import { IoMenu } from "react-icons/io5";
 import { ThemeSwitcher } from "../../../components/ui/theme-switcher";
+import { ROUTE } from "../../../constants/route";
 import { LinkList } from "../LinkList/LinkList";
 import { Logo } from "../Logo/Logo";
 
-export function Header() {
+export function PageHeader() {
   const [open, setOpen] = useState(false);
 
   const links = [
-    { path: "/files/", label: "Files" },
-    { path: "/scripts/", label: "Scripts" },
-    { path: "/editor/", label: "Editor" },
-    { path: "/report-generator/", label: "Report Generator" },
+    { path: ROUTE.FILES, label: "Files" },
+    { path: ROUTE.SCRIPTS, label: "Scripts" },
+    { path: ROUTE.EDITOR, label: "Editor" },
+    { path: ROUTE.REPORT_GENERATOR, label: "Report Generator" },
   ];
 
   return (

@@ -2,6 +2,7 @@
 
 import { Link } from "@chakra-ui/react";
 import NextLink from "next/link";
+import { ROUTE } from "../../../constants/route";
 
 export function Logo() {
   return (
@@ -10,7 +11,7 @@ export function Logo() {
       fontFamily="monospace"
       fontSize="20px"
       fontWeight="bold"
-      href="/"
+      href={ROUTE.HOME}
       letterSpacing="-1px"
       p="4px 12px"
     >
