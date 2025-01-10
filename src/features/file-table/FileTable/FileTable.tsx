@@ -1,13 +1,12 @@
 "use client";
 
-import { FileItem } from "../../../../db";
-
 import { Code, IconButton, Table } from "@chakra-ui/react";
-import { FiDownload, FiPenTool } from "react-icons/fi";
-import { IoMdRemoveCircleOutline } from "react-icons/io";
-import { Checkbox } from "../../../components/ui/checkbox";
-import { downloadFile } from "../../../helpers/download-file";
 import { useEffect, useState } from "react";
+import { FiDownload, FiPenTool } from "react-icons/fi";
+import { FileItem } from "../../../../db";
+import { Checkbox } from "../../../components/ui/checkbox";
+import { DeleteButton } from "../../../core/DeleteButton/DeleteButton";
+import { downloadFile } from "../../../helpers/download-file";
 
 export interface IFileTableProps {
   selectedFileIds: Array<number>;
@@ -81,14 +80,11 @@ export function FileTable({
           <FiPenTool />
         </IconButton>
 
-        <IconButton
-          colorPalette="red"
-          rounded="full"
-          variant="ghost"
-          onClick={() => onDeleteFileItem(fileItem)}
-        >
-          <IoMdRemoveCircleOutline />
-        </IconButton>
+        <DeleteButton
+          onDelete={() => onDeleteFileItem(fileItem)}
+          dialogTitle="Delete file"
+          dialogDescription="Are you sure you want to delete this file?"
+        />
 
         <IconButton
           colorPalette="green"
@@ -103,28 +99,32 @@ export function FileTable({
   ));
 
   return (
-    <Table.ScrollArea borderWidth="1px" rounded="md" maxHeight="410px">
-      <Table.Root stickyHeader size="lg">
-        <Table.Header>
-          <Table.Row bg="bg.muted">
-            <Table.ColumnHeader w="6">
-              <Checkbox
-                top="1"
-                aria-label="Select all rows"
-                checked={
-                  indeterminate ? "indeterminate" : selectedFileIds.length > 0
-                }
-                onCheckedChange={onSelectAll}
-              />
-            </Table.ColumnHeader>
-            <Table.ColumnHeader>Name</Table.ColumnHeader>
-            <Table.ColumnHeader>Type</Table.ColumnHeader>
-            <Table.ColumnHeader>Last modified</Table.ColumnHeader>
-            <Table.ColumnHeader textAlign="center">Actions</Table.ColumnHeader>
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>{rows}</Table.Body>
-      </Table.Root>
-    </Table.ScrollArea>
+    <>
+      <Table.ScrollArea borderWidth="1px" rounded="md" maxHeight="410px">
+        <Table.Root stickyHeader size="lg">
+          <Table.Header>
+            <Table.Row bg="bg.muted">
+              <Table.ColumnHeader w="6">
+                <Checkbox
+                  top="1"
+                  aria-label="Select all rows"
+                  checked={
+                    indeterminate ? "indeterminate" : selectedFileIds.length > 0
+                  }
+                  onCheckedChange={onSelectAll}
+                />
+              </Table.ColumnHeader>
+              <Table.ColumnHeader>Name</Table.ColumnHeader>
+              <Table.ColumnHeader>Type</Table.ColumnHeader>
+              <Table.ColumnHeader>Last modified</Table.ColumnHeader>
+              <Table.ColumnHeader textAlign="center">
+                Actions
+              </Table.ColumnHeader>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>{rows}</Table.Body>
+        </Table.Root>
+      </Table.ScrollArea>
+    </>
   );
 }
