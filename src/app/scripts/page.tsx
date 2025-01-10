@@ -17,6 +17,8 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { LuHardDriveDownload } from "react-icons/lu";
 import { db, FileItem } from "../../../db";
 import { Toaster, toaster } from "../../components/ui/toaster";
+import { EDITOR_ROUTE_PARAM } from "../../constants/editor-route-param";
+import { ROUTE } from "../../constants/route";
 import { Loader } from "../../core/Loader/Loader";
 import { FileTable } from "../../features/file-table/FileTable/FileTable";
 import { FileDropzone } from "../../features/file-upload/FileDropzone/FileDropzone";
@@ -84,7 +86,7 @@ export default function Scripts() {
   }
 
   function onEditFileItem(id: number) {
-    redirect(`/editor?scriptId=${id}`);
+    redirect(`${ROUTE.EDITOR}/?${EDITOR_ROUTE_PARAM.SCRIPT_ID}=${id}`);
   }
 
   function onSelectFileItems(ids: Array<number>) {
@@ -134,7 +136,7 @@ export default function Scripts() {
         No scripts added. Start by importing some scripts or writing one in the{" "}
         <Link
           as={NextLink}
-          href="/editor"
+          href={ROUTE.EDITOR}
           colorPalette="purple"
           fontWeight="bold"
         >

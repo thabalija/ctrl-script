@@ -6,10 +6,10 @@ import { useTheme } from "next-themes";
 
 export interface ICodeEditorProps {
   script: string;
-  handleScriptChange: (value: string) => void;
+  onScriptChange: (value: string) => void;
 }
 
-export function CodeEditor({ script, handleScriptChange }: ICodeEditorProps) {
+export function CodeEditor({ script, onScriptChange }: ICodeEditorProps) {
   const { theme } = useTheme();
 
   return (
@@ -26,7 +26,7 @@ export function CodeEditor({ script, handleScriptChange }: ICodeEditorProps) {
         value={script}
         language="javascript"
         theme={theme === "dark" ? "vs-dark" : "light"}
-        onChange={(value) => handleScriptChange(value || "")}
+        onChange={(value) => onScriptChange(value || "")}
       />
     </Box>
   );

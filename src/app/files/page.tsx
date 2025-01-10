@@ -15,8 +15,10 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { LuHardDriveDownload, LuListStart } from "react-icons/lu";
 import { db, FileItem } from "../../../db";
 import { Toaster, toaster } from "../../components/ui/toaster";
+import { EDITOR_ROUTE_PARAM } from "../../constants/editor-route-param";
+import { ROUTE } from "../../constants/route";
+import { Dropdown, IDropdownOption } from "../../core/Dropdown/Dropdown";
 import { Loader } from "../../core/Loader/Loader";
-import { Dropdown, IDropdownOption } from "../../core/select/dropdown";
 import { FileTable } from "../../features/file-table/FileTable/FileTable";
 import { FileDropzone } from "../../features/file-upload/FileDropzone/FileDropzone";
 import { compressFiles } from "../../helpers/compress-files";
@@ -83,7 +85,7 @@ export default function FilesContainer() {
   }
 
   function onEditFileItem(id: number) {
-    redirect(`/editor?fileId=${id}`);
+    redirect(`${ROUTE.EDITOR}/?${EDITOR_ROUTE_PARAM.FILE_ID}=${id}`);
   }
 
   function onSelectFileItems(ids: Array<number>) {

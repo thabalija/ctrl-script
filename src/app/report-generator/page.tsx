@@ -111,7 +111,7 @@ export default function ReportGenerator() {
         onScriptSelect={onScriptSelect}
       />
       <Box marginBottom="8">
-        <CodeEditor script={script} handleScriptChange={setScript} />
+        <CodeEditor script={script} onScriptChange={setScript} />
       </Box>
       <ReportScriptActions
         report={report}
