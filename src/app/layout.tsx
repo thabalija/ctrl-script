@@ -2,9 +2,9 @@ import { Provider } from "@/components/ui/provider";
 import { Container } from "@chakra-ui/react";
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { Footer } from "../features/footer/Footer/Footer";
-import { PageHeader } from "../features/page-header/PageHeader/PageHeader";
-import { PageBackground } from "../features/page-background/PageBackground/PageBackground";
+import { Footer } from "./_components/Footer/Footer";
+import { PageBackground } from "./_components/PageBackground/PageBackground";
+import { PageHeader } from "./_components/PageHeader/PageHeader";
 
 export const metadata: Metadata = {
   title: "CTRL script",
@@ -21,21 +21,22 @@ export default function RootLayout({
         <link
           rel="apple-touch-icon"
           sizes="180x180"
-          href="/apple-touch-icon.png"
+          href="/images/apple-touch-icon.png"
         />
         <link
           rel="icon"
           type="image/png"
           sizes="32x32"
-          href="/favicon-32x32.png"
+          href="/images/favicon-32x32.png"
         />
         <link
           rel="icon"
           type="image/png"
           sizes="16x16"
-          href="/favicon-16x16.png"
+          href="/images/favicon-16x16.png"
         />
-        <link rel="manifest" href="/site.webmanifest" />
+        <link rel="favicon" href="/images/favicon.ico" />
+        <link rel="manifest" href="/manifest/site.webmanifest" />
       </head>
       <body>
         <Provider>
