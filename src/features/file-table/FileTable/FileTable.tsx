@@ -3,10 +3,11 @@
 import { Code, IconButton, Table } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { FiDownload, FiPenTool } from "react-icons/fi";
+import { IoMdRemoveCircleOutline } from "react-icons/io";
 import { FileItem } from "../../../../db";
 import { Checkbox } from "../../../components/ui/checkbox";
-import { DeleteButton } from "../../../core/DeleteButton/DeleteButton";
-import { downloadFile } from "../../../helpers/download-file";
+import { ConfirmAction } from "../../../core/ConfirmAction/ConfirmAction";
+import { downloadFile } from "../../../app/_utils/downloadFile";
 
 export interface IFileTableProps {
   selectedFileIds: Array<number>;
@@ -80,11 +81,22 @@ export function FileTable({
           <FiPenTool />
         </IconButton>
 
-        <DeleteButton
-          onDelete={() => onDeleteFileItem(fileItem)}
-          dialogTitle="Delete file"
-          dialogDescription="Are you sure you want to delete this file?"
-        />
+        <ConfirmAction
+          title="Delete file"
+          description="Are you sure you want to delete this file?"
+          onConfirm={() => onDeleteFileItem(fileItem)}
+        >
+          {({ openDialog }) => (
+            <IconButton
+              colorPalette="red"
+              rounded="full"
+              variant="ghost"
+              onClick={openDialog}
+            >
+              <IoMdRemoveCircleOutline />
+            </IconButton>
+          )}
+        </ConfirmAction>
 
         <IconButton
           colorPalette="green"

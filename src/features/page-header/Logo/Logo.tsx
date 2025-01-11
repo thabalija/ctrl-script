@@ -2,7 +2,7 @@
 
 import { Link } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { ROUTE } from "../../../constants/route";
+import { ROUTE } from "../../../app/_constants/route";
 
 export function Logo() {
   return (

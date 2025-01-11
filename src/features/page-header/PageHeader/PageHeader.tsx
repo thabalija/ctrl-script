@@ -13,7 +13,7 @@ import { Container, DrawerTitle, VStack } from "@chakra-ui/react";
 import { useState } from "react";
 import { IoMenu } from "react-icons/io5";
 import { ThemeSwitcher } from "../../../components/ui/theme-switcher";
-import { ROUTE } from "../../../constants/route";
+import { ROUTE } from "../../../app/_constants/route";
 import { LinkList } from "../LinkList/LinkList";
 import { Logo } from "../Logo/Logo";
 

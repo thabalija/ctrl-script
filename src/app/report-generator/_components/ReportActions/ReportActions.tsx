@@ -3,7 +3,7 @@
 import { Button, Stack } from "@chakra-ui/react";
 import { FiDownload } from "react-icons/fi";
 import { FileMetaForm } from "../../../../features/file-meta-form/FileMetaForm/FileMetaForm";
-import { downloadFile } from "../../../../helpers/download-file";
+import { downloadFile } from "../../../_utils/downloadFile";
 
 interface IReportActionsProps {
   reportName: string;

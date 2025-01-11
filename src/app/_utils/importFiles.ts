@@ -1,6 +1,6 @@
 import * as zip from "@zip.js/zip.js";
 import { EntityTable } from "dexie";
-import { FileItem } from "../../db";
+import { FileItem } from "../../../db";
 
 export async function importFiles(
   fileList: FileList | null,

@@ -8,7 +8,7 @@ export interface IIconCardProps {
   title: string;
 }
 
-export default function IconCard({ description, icon, title }: IIconCardProps) {
+export function IconCard({ description, icon, title }: IIconCardProps) {
   return (
     <Card.Root width="100%">
       <Card.Body alignItems="center" padding="64px 32px">

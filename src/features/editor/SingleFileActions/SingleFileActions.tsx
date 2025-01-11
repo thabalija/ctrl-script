@@ -6,7 +6,7 @@ import { FaRegSave } from "react-icons/fa";
 import { FiDownload } from "react-icons/fi";
 import { MdOutlineAddCircleOutline } from "react-icons/md";
 import { db, FileItem } from "../../../../db";
-import { downloadFile } from "../../../helpers/download-file";
+import { downloadFile } from "../../../app/_utils/downloadFile";
 import { FileMetaForm } from "../../file-meta-form/FileMetaForm/FileMetaForm";
 
 interface ISingleFileActionsProps {

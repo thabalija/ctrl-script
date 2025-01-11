@@ -15,15 +15,17 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { LuHardDriveDownload, LuListStart } from "react-icons/lu";
 import { db, FileItem } from "../../../db";
 import { Toaster, toaster } from "../../components/ui/toaster";
-import { EDITOR_ROUTE_PARAM } from "../../constants/editor-route-param";
-import { ROUTE } from "../../constants/route";
+import { EDITOR_ROUTE_PARAM } from "../_constants/editorRouteParam";
+import { ROUTE } from "../_constants/route";
+import { ConfirmAction } from "../../core/ConfirmAction/ConfirmAction";
 import { Dropdown, IDropdownOption } from "../../core/Dropdown/Dropdown";
 import { Loader } from "../../core/Loader/Loader";
 import { FileTable } from "../../features/file-table/FileTable/FileTable";
 import { FileDropzone } from "../../features/file-upload/FileDropzone/FileDropzone";
-import { compressFiles } from "../../helpers/compress-files";
-import { downloadFile } from "../../helpers/download-file";
-import { importFiles } from "../../helpers/import-files";
+import { compressFiles } from "../_utils/compressFiles";
+import { downloadFile } from "../_utils/downloadFile";
+import { importFiles } from "../_utils/importFiles";
+import { applyScriptToMultipleFiles } from "./_utils/applyScriptToMultipleFiles";
 
 export default function FilesContainer() {
   const files = useLiveQuery(() => db.files.toArray());
@@ -48,7 +50,7 @@ export default function FilesContainer() {
     });
   }
 
-  async function onRemoveFiles() {
+  async function onDeleteMultipleFiles() {
     if (!selectedFileItemIds.length) {
       await db.files.clear();
     } else {
@@ -95,24 +97,7 @@ export default function FilesContainer() {
   async function onApplyScript() {
     if (!selectedScript || !files) return;
 
-    const script = await selectedScript.file.text();
-
-    const fileItemsToModify = selectedFileItemIds.length
-      ? files.filter((file) => selectedFileItemIds.includes(file.id))
-      : files;
-
-    for (const fileItem of fileItemsToModify) {
-      const func = new Function(script);
-      const fileText = await fileItem.file.text();
-      const result = func.call(null, fileText);
-      const newFile = new File([result], fileItem.name, {
-        type: fileItem.file.type,
-      });
-
-      fileItem.file = newFile;
-
-      await db.files.put(fileItem);
-    }
+    applyScriptToMultipleFiles(selectedScript, files, selectedFileItemIds);
 
     toaster.create({
       title: `Script applied successfully.`,
@@ -185,13 +170,22 @@ export default function FilesContainer() {
             </Button>
           </HStack>
           <HStack gap="4">
-            <Button colorPalette="red" variant="ghost" onClick={onRemoveFiles}>
-              <FaRegTrashAlt /> Remove{" "}
-              {selectedFileItemIds.length &&
-              selectedFileItemIds.length !== files.length
-                ? "selected"
-                : "all"}
-            </Button>
+            <ConfirmAction
+              title="Delete files"
+              description="Are you sure you want to remove these files?"
+              onConfirm={() => onDeleteMultipleFiles()}
+            >
+              {({ openDialog }) => (
+                <Button colorPalette="red" variant="ghost" onClick={openDialog}>
+                  <FaRegTrashAlt /> Remove{" "}
+                  {selectedFileItemIds.length &&
+                  selectedFileItemIds.length !== files.length
+                    ? "selected"
+                    : "all"}
+                </Button>
+              )}
+            </ConfirmAction>
+
             <Button
               colorPalette="green"
               variant="solid"

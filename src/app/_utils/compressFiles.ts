@@ -1,6 +1,6 @@
 import * as zip from "@zip.js/zip.js";
-import { FileItem } from "../../db";
-import { renameFile } from "./rename-file";
+import { FileItem } from "../../../db";
+import { renameFile } from "./renameFile";
 
 export async function compressFiles(files: Array<FileItem>): Promise<Blob> {
   const zipWriter = new zip.ZipWriter(new zip.BlobWriter("application/zip"), {

@@ -1,0 +1,30 @@
+import { db, FileItem } from "../../../../db";
+
+export async function applyScriptToMultipleFiles(
+  selectedScript: FileItem,
+  files: Array<FileItem>,
+  selectedFileItemIds: Array<number>,
+) {
+  const script = await selectedScript.file.text();
+
+  const fileItemsToModify = selectedFileItemIds.length
+    ? files.filter((file) => selectedFileItemIds.includes(file.id))
+    : files;
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+  const scriptFunction = new Function(script);
+
+  for (const fileItem of fileItemsToModify) {
+    const fileText = await fileItem.file.text();
+
+    const result = scriptFunction.call(null, fileText);
+
+    const newFile = new File([result], fileItem.name, {
+      type: fileItem.file.type,
+    });
+
+    fileItem.file = newFile;
+
+    await db.files.put(fileItem);
+  }
+}

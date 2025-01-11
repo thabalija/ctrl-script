@@ -8,10 +8,10 @@ import { db, FileItem } from "../../../db";
 import { SectionHeader } from "../../core/SectionHeader/SectionHeader";
 import { CodeEditor } from "../../features/editor/CodeEditor/CodeEditor";
 import { FileOutputEditor } from "../../features/editor/FileOutputEditor/FileOutputEditor";
-import { ReportActions } from "./components/ReportActions/ReportActions";
-import { ReportGeneratorHeaderActions } from "./components/ReportGeneratorHeaderActions/ReportGeneratorHeaderActions";
-import { ReportScriptActions } from "./components/ReportScriptActions/ReportScriptActions";
-import { defaultMultiFileEditorScript } from "./constants/default-multi-file-editor-script.const";
+import { ReportActions } from "./_components/ReportActions/ReportActions";
+import { ReportGeneratorHeaderActions } from "./_components/ReportGeneratorHeaderActions/ReportGeneratorHeaderActions";
+import { ReportScriptActions } from "./_components/ReportScriptActions/ReportScriptActions";
+import { defaultMultiFileEditorScript } from "./_constants/defaultMultiFileEditorScript";
 
 export default function ReportGenerator() {
   const files = useLiveQuery(() => db.files.toArray()) || [];

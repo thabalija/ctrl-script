@@ -17,14 +17,15 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { LuHardDriveDownload } from "react-icons/lu";
 import { db, FileItem } from "../../../db";
 import { Toaster, toaster } from "../../components/ui/toaster";
-import { EDITOR_ROUTE_PARAM } from "../../constants/editor-route-param";
-import { ROUTE } from "../../constants/route";
+import { EDITOR_ROUTE_PARAM } from "../_constants/editorRouteParam";
+import { ROUTE } from "../_constants/route";
+import { ConfirmAction } from "../../core/ConfirmAction/ConfirmAction";
 import { Loader } from "../../core/Loader/Loader";
 import { FileTable } from "../../features/file-table/FileTable/FileTable";
 import { FileDropzone } from "../../features/file-upload/FileDropzone/FileDropzone";
-import { compressFiles } from "../../helpers/compress-files";
-import { downloadFile } from "../../helpers/download-file";
-import { importFiles } from "../../helpers/import-files";
+import { compressFiles } from "../_utils/compressFiles";
+import { downloadFile } from "../_utils/downloadFile";
+import { importFiles } from "../_utils/importFiles";
 
 export default function Scripts() {
   const scripts = useLiveQuery(() => db.scripts.toArray());
@@ -57,7 +58,7 @@ export default function Scripts() {
     }
   }
 
-  async function onRemoveScripts() {
+  async function onDeleteMultipleScripts() {
     if (!selectedFileItemIds.length) {
       await db.scripts.clear();
     } else {
@@ -111,13 +112,22 @@ export default function Scripts() {
           />
         </Box>
         <HStack justifyContent="end" margin="32px 0" gap="4">
-          <Button colorPalette="red" variant="ghost" onClick={onRemoveScripts}>
-            <FaRegTrashAlt /> Remove{" "}
-            {selectedFileItemIds.length &&
-            selectedFileItemIds.length !== scripts.length
-              ? "selected"
-              : "all"}
-          </Button>
+          <ConfirmAction
+            title="Delete scripts"
+            description="Are you sure you want to remove these scripts?"
+            onConfirm={() => onDeleteMultipleScripts()}
+          >
+            {({ openDialog }) => (
+              <Button colorPalette="red" variant="ghost" onClick={openDialog}>
+                <FaRegTrashAlt /> Remove{" "}
+                {selectedFileItemIds.length &&
+                selectedFileItemIds.length !== scripts.length
+                  ? "selected"
+                  : "all"}
+              </Button>
+            )}
+          </ConfirmAction>
+
           <Button
             colorPalette="green"
             variant="solid"

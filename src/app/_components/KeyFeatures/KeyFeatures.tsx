@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import { MdAutoGraph } from "react-icons/md";
 import { SlChemistry } from "react-icons/sl";
 import { TbDatabase } from "react-icons/tb";
-import IconCard from "../../../core/IconCard/IconCard";
+import { IconCard } from "../../../core/IconCard/IconCard";
 
 export default function KeyFeatures() {
   const cards = useMemo(() => {

@@ -4,8 +4,8 @@ import { Container, Flex, Heading, Text } from "@chakra-ui/react";
 import { redirect } from "next/navigation";
 import { db } from "../../../../db";
 import { FileSelect } from "../../../features/file-upload/FileSelect/FileSelect";
-import { importFiles } from "../../../helpers/import-files";
-import { ROUTE } from "../../../constants/route";
+import { ROUTE } from "../../_constants/route";
+import { importFiles } from "../../_utils/importFiles";
 
 export default function HomeHero() {
   async function onAddFiles(fileList: FileList | null) {

@@ -5,14 +5,16 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { db, FileItem } from "../../../db";
-import { EDITOR_ROUTE_PARAM } from "../../constants/editor-route-param";
+import { EDITOR_ROUTE_PARAM } from "../_constants/editorRouteParam";
 import { SectionHeader } from "../../core/SectionHeader/SectionHeader";
 import { CodeEditor } from "../../features/editor/CodeEditor/CodeEditor";
 import { FileDiff } from "../../features/editor/FileDiff/FileDiff";
 import { SingleFileActions } from "../../features/editor/SingleFileActions/SingleFileActions";
-import { ScriptActions } from "./components/ScriptActions/ScriptActions";
-import { SingleFileHeaderActions } from "./components/SingleFileHeaderActions/SingleFileHeaderActions";
-import { defaultSingleFileEditorScript } from "./constants/default-single-file-editor-script.const";
+import { ScriptActions } from "./_components/ScriptActions/ScriptActions";
+import { SingleFileHeaderActions } from "./_components/SingleFileHeaderActions/SingleFileHeaderActions";
+import { defaultSingleFileEditorScript } from "./_constants/defaultSingleFileEditorScript";
+import { createScript } from "./_utils/createScript";
+import { saveScript } from "./_utils/saveScript";
 
 export default function Editor() {
   const files = useLiveQuery(() => db.files.toArray()) || [];
@@ -88,28 +90,11 @@ export default function Editor() {
       return;
     }
 
-    const newFile = new File([script || ""], scriptName, {
-      type: "text/javascript",
-    });
-
-    selectedScriptFileItem.name = scriptName;
-    selectedScriptFileItem.file = newFile;
-    await db.scripts.put(selectedScriptFileItem);
+    await saveScript(scriptName, script, selectedScriptFileItem);
   }
 
   async function onCreateScript(scriptName: string) {
-    const newFile = new File([script || ""], scriptName, {
-      type: "text/javascript",
-    });
-
-    const newScript = {
-      name: scriptName,
-      extension: "js",
-      file: newFile,
-    };
-
-    const newScriptId = await db.scripts.add(newScript);
-    const selectedScript = await db.scripts.get(newScriptId);
+    const selectedScript = await createScript(scriptName, script);
 
     if (selectedScript) {
       setSelectedScriptFileItem(selectedScript);

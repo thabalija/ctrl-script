@@ -1,8 +1,8 @@
 "use client";
 
 import { Box, Container } from "@chakra-ui/react";
-import HomeHero from "./components/HomeHero/HomeHero";
-import KeyFeatures from "./components/KeyFeatures/KeyFeatures";
+import HomeHero from "./_components/HomeHero/HomeHero";
+import KeyFeatures from "./_components/KeyFeatures/KeyFeatures";
 
 export default function Home() {
   return (
