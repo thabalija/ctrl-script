@@ -2,9 +2,9 @@ import { Provider } from "@/components/ui/provider";
 import { Container } from "@chakra-ui/react";
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { Footer } from "../features/footer/Footer/Footer";
-import { PageHeader } from "../features/page-header/PageHeader/PageHeader";
-import { PageBackground } from "../features/page-background/PageBackground/PageBackground";
+import { Footer } from "./_components/Footer/Footer";
+import { PageBackground } from "./_components/PageBackground/PageBackground";
+import { PageHeader } from "./_components/PageHeader/PageHeader";
 
 export const metadata: Metadata = {
   title: "CTRL script",
