@@ -5,7 +5,7 @@ import { FiDownload } from "react-icons/fi";
 import { downloadFile } from "../../../../_utils/downloadFile";
 import { FileMetaForm } from "../../../_components/FileMetaForm/FileMetaForm";
 
-interface IReportActionsProps {
+interface IReportGeneratorFooterProps {
   reportName: string;
   reportExtension: string;
   report: string;
@@ -13,13 +13,13 @@ interface IReportActionsProps {
   setReportExtension: (extension: string) => void;
 }
 
-export function ReportActions({
+export function ReportGeneratorFooter({
   report,
   reportExtension,
   reportName,
   setReportExtension,
   setReportName,
-}: IReportActionsProps) {
+}: IReportGeneratorFooterProps) {
   async function onDownload() {
     const newFile = new File([report], reportName, {
       type: reportExtension,

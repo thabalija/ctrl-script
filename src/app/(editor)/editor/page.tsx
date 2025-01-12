@@ -9,10 +9,10 @@ import { SectionHeader } from "../../_components/SectionHeader/SectionHeader";
 import { EDITOR_ROUTE_PARAM } from "../../_constants/editorRouteParam";
 import { CodeEditor } from "../_components/CodeEditor/CodeEditor";
 import { FileDiff } from "../_components/FileDiff/FileDiff";
-import { SingleFileActions } from "../_components/SingleFileActions/SingleFileActions";
-import { ScriptActions } from "./_components/ScriptActions/ScriptActions";
-import { SingleFileHeaderActions } from "./_components/SingleFileHeaderActions/SingleFileHeaderActions";
-import { defaultSingleFileEditorScript } from "./_constants/defaultSingleFileEditorScript";
+import { EditorFooter } from "./_components/EditorFooter/EditorFooter";
+import { EditorHeader } from "./_components/EditorHeader/EditorHeader";
+import { EditorScriptActions } from "./_components/EditorScriptActions/EditorScriptActions";
+import { defaultEditorScript } from "./_constants/defaultEditorScript";
 import { createScript } from "./_utils/createScript";
 import { saveScript } from "./_utils/saveScript";
 
@@ -20,7 +20,7 @@ export default function Editor() {
   const files = useLiveQuery(() => db.files.toArray()) || [];
   const scripts = useLiveQuery(() => db.scripts.toArray()) || [];
 
-  const [script, setScript] = useState<string>(defaultSingleFileEditorScript);
+  const [script, setScript] = useState<string>(defaultEditorScript);
   const [original, setOriginal] = useState("");
   const [modified, setModified] = useState(original);
   const [selectedFileFileItem, setSelectedFileFileItem] = useState<FileItem>();
@@ -114,7 +114,7 @@ export default function Editor() {
           </>
         }
       />
-      <SingleFileHeaderActions
+      <EditorHeader
         files={files}
         scripts={scripts}
         selectedFile={selectedFileFileItem}
@@ -127,7 +127,7 @@ export default function Editor() {
       <Box marginBottom="8">
         <CodeEditor script={script} onScriptChange={setScript} />
       </Box>
-      <ScriptActions
+      <EditorScriptActions
         original={original}
         currentFileItem={selectedFileFileItem}
         script={script}
@@ -145,7 +145,7 @@ export default function Editor() {
           language={selectedFileFileItem?.extension || ""}
         />
       </Box>
-      <SingleFileActions
+      <EditorFooter
         fileItem={selectedFileFileItem}
         newFileContent={modified}
         onFileSaved={onFileSaved}

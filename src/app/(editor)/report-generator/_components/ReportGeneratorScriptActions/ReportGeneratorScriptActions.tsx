@@ -6,19 +6,19 @@ import { LuListStart } from "react-icons/lu";
 import { MdRedo, MdUndo } from "react-icons/md";
 import { FileItem } from "../../../../../../db";
 
-interface IReportScriptActionsProps {
+interface IReportGeneratorScriptActionsProps {
   selectedFileItems: Array<FileItem>;
   script: string;
   report: string;
   onGenerateReport: (report: string) => void;
 }
 
-export function ReportScriptActions({
+export function ReportGeneratorScriptActions({
   script,
   selectedFileItems,
   report,
   onGenerateReport,
-}: IReportScriptActionsProps) {
+}: IReportGeneratorScriptActionsProps) {
   const [versions, setVersions] = useState<Array<string>>([]);
   const [currentVersionIndex, setCurrentVersionIndex] = useState(-1);
 

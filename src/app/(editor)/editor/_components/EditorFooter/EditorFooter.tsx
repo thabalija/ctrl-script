@@ -5,23 +5,23 @@ import { useEffect, useState } from "react";
 import { FaRegSave } from "react-icons/fa";
 import { FiDownload } from "react-icons/fi";
 import { MdOutlineAddCircleOutline } from "react-icons/md";
-import { db, FileItem } from "../../../../../db";
-import { downloadFile } from "../../../_utils/downloadFile";
-import { FileMetaForm } from "../FileMetaForm/FileMetaForm";
+import { db, FileItem } from "../../../../../../db";
+import { downloadFile } from "../../../../_utils/downloadFile";
+import { FileMetaForm } from "../../../_components/FileMetaForm/FileMetaForm";
 
-interface ISingleFileActionsProps {
+interface IEditorFooterProps {
   fileItem?: FileItem;
   newFileContent: string;
   onFileSaved: (fileItem: FileItem) => unknown;
   onFileCreated: (fileItem: FileItem) => unknown;
 }
 
-export function SingleFileActions({
+export function EditorFooter({
   fileItem,
   newFileContent,
   onFileCreated,
   onFileSaved,
-}: ISingleFileActionsProps) {
+}: IEditorFooterProps) {
   const [fileName, setFileName] = useState(fileItem?.name || "");
   const [extension, setExtension] = useState(fileItem?.extension || "");
 

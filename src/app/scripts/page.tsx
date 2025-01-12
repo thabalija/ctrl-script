@@ -7,6 +7,7 @@ import {
   Heading,
   HStack,
   Link,
+  Show,
   Text,
 } from "@chakra-ui/react";
 import { useLiveQuery } from "dexie-react-hooks";
@@ -17,10 +18,10 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { LuHardDriveDownload } from "react-icons/lu";
 import { db, FileItem } from "../../../db";
 import { Toaster, toaster } from "../../components/ui/toaster";
-import { Loader } from "../_components/Loader/Loader";
-import { FileTable } from "../_components/FileTable/FileTable";
-import { FileDropzone } from "../_components/FileDropzone/FileDropzone";
 import { ConfirmAction } from "../_components/ConfirmAction/ConfirmAction";
+import { FileDropzone } from "../_components/FileDropzone/FileDropzone";
+import { FileTable } from "../_components/FileTable/FileTable";
+import { Loader } from "../_components/Loader/Loader";
 import { EDITOR_ROUTE_PARAM } from "../_constants/editorRouteParam";
 import { ROUTE } from "../_constants/route";
 import { compressFiles } from "../_utils/compressFiles";
@@ -86,81 +87,79 @@ export default function Scripts() {
     downloadFile(compressedFile, "files.zip");
   }
 
-  function onEditFileItem(id: number) {
-    redirect(`${ROUTE.EDITOR}/?${EDITOR_ROUTE_PARAM.SCRIPT_ID}=${id}`);
-  }
-
-  function onSelectFileItems(ids: Array<number>) {
-    setSelectedFileItemIds(ids);
-  }
-
   const isLoading = scripts === undefined;
-
-  const tableContent =
-    !isLoading && scripts.length ? (
-      <>
-        <Box margin="32px 0">
-          <Heading as="h1" marginBottom="24px">
-            Scripts ({scripts.length})
-          </Heading>
-          <FileTable
-            selectedFileIds={selectedFileItemIds}
-            files={scripts}
-            onDeleteFileItem={onDeleteScript}
-            onEditFileItem={onEditFileItem}
-            onSelectFileItems={onSelectFileItems}
-          />
-        </Box>
-        <HStack justifyContent="end" margin="32px 0" gap="4">
-          <ConfirmAction
-            title="Delete scripts"
-            description="Are you sure you want to remove these scripts?"
-            onConfirm={() => onDeleteMultipleScripts()}
-          >
-            {({ openDialog }) => (
-              <Button colorPalette="red" variant="ghost" onClick={openDialog}>
-                <FaRegTrashAlt /> Remove{" "}
-                {selectedFileItemIds.length &&
-                selectedFileItemIds.length !== scripts.length
-                  ? "selected"
-                  : "all"}
-              </Button>
-            )}
-          </ConfirmAction>
-
-          <Button
-            colorPalette="green"
-            variant="solid"
-            onClick={onDownloadScripts}
-          >
-            <LuHardDriveDownload /> Download{" "}
-            {selectedFileItemIds.length &&
-            selectedFileItemIds.length !== scripts.length
-              ? "selected"
-              : "all"}
-          </Button>
-        </HStack>
-      </>
-    ) : (
-      <Text margin="72px 0" textAlign="center">
-        No scripts added. Start by importing some scripts or writing one in the{" "}
-        <Link
-          as={NextLink}
-          href={ROUTE.EDITOR}
-          colorPalette="purple"
-          fontWeight="bold"
-        >
-          editor
-        </Link>
-        .
-      </Text>
-    );
-
-  const pageContent = isLoading ? <Loader /> : tableContent;
 
   return (
     <Container maxWidth="1000px">
-      {pageContent}
+      <Show when={isLoading}>
+        <Loader />
+      </Show>
+
+      <Show when={!isLoading && !scripts.length}>
+        <Text margin="72px 0" textAlign="center">
+          No scripts added. Start by importing some scripts or writing one in
+          the{" "}
+          <Link
+            as={NextLink}
+            href={ROUTE.EDITOR}
+            colorPalette="purple"
+            fontWeight="bold"
+          >
+            editor
+          </Link>
+          .
+        </Text>
+      </Show>
+
+      {!isLoading && scripts.length ? (
+        <>
+          <Box margin="32px 0">
+            <Heading as="h1" marginBottom="24px">
+              Scripts ({scripts.length})
+            </Heading>
+            <FileTable
+              selectedFileIds={selectedFileItemIds}
+              files={scripts}
+              onDeleteFileItem={onDeleteScript}
+              onEditFileItem={(id) =>
+                redirect(
+                  `${ROUTE.EDITOR}/?${EDITOR_ROUTE_PARAM.SCRIPT_ID}=${id}`,
+                )
+              }
+              onSelectFileItems={setSelectedFileItemIds}
+            />
+          </Box>
+          <HStack justifyContent="end" margin="32px 0" gap="4">
+            <ConfirmAction
+              title="Delete scripts"
+              description="Are you sure you want to remove these scripts?"
+              onConfirm={() => onDeleteMultipleScripts()}
+            >
+              {({ openDialog }) => (
+                <Button colorPalette="red" variant="ghost" onClick={openDialog}>
+                  <FaRegTrashAlt /> Remove{" "}
+                  {selectedFileItemIds.length &&
+                  selectedFileItemIds.length !== scripts.length
+                    ? "selected"
+                    : "all"}
+                </Button>
+              )}
+            </ConfirmAction>
+
+            <Button
+              colorPalette="green"
+              variant="solid"
+              onClick={onDownloadScripts}
+            >
+              <LuHardDriveDownload /> Download{" "}
+              {selectedFileItemIds.length &&
+              selectedFileItemIds.length !== scripts.length
+                ? "selected"
+                : "all"}
+            </Button>
+          </HStack>
+        </>
+      ) : null}
 
       <Box mt="32px" mb="32px">
         <FileDropzone onAddFiles={onAddScripts} />
