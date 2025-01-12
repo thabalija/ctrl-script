@@ -6,7 +6,7 @@ import { LuListStart } from "react-icons/lu";
 import { MdRedo, MdUndo } from "react-icons/md";
 import { FileItem } from "../../../../../../db";
 
-interface IScriptActionsProps {
+interface IEditorScriptActionsProps {
   currentFileItem?: FileItem;
   script: string;
   modified: string;
@@ -14,13 +14,13 @@ interface IScriptActionsProps {
   onModifiedChange: (newModifiedVersion: string) => void;
 }
 
-export function ScriptActions({
+export function EditorScriptActions({
   currentFileItem,
   script,
   modified,
   original,
   onModifiedChange,
-}: IScriptActionsProps) {
+}: IEditorScriptActionsProps) {
   const [versions, setVersions] = useState<Array<File>>([]);
   const [currentVersionIndex, setCurrentVersionIndex] = useState(0);
 

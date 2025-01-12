@@ -8,16 +8,16 @@ import { db, FileItem } from "../../../../db";
 import { SectionHeader } from "../../_components/SectionHeader/SectionHeader";
 import { CodeEditor } from "../_components/CodeEditor/CodeEditor";
 import { FileOutputEditor } from "../_components/FileOutputEditor/FileOutputEditor";
-import { ReportActions } from "./_components/ReportActions/ReportActions";
-import { ReportGeneratorHeaderActions } from "./_components/ReportGeneratorHeaderActions/ReportGeneratorHeaderActions";
-import { ReportScriptActions } from "./_components/ReportScriptActions/ReportScriptActions";
-import { defaultMultiFileEditorScript } from "./_constants/defaultMultiFileEditorScript";
+import { ReportGeneratorFooter } from "./_components/ReportGeneratorFooter/ReportGeneratorFooter";
+import { ReportGeneratorHeader } from "./_components/ReportGeneratorHeader/ReportGeneratorHeader";
+import { ReportGeneratorScriptActions } from "./_components/ReportGeneratorScriptActions/ReportGeneratorScriptActions";
+import { defaultReportGeneratorScript } from "./_constants/defaultReportGeneratorScript";
 
 export default function ReportGenerator() {
   const files = useLiveQuery(() => db.files.toArray()) || [];
   const scripts = useLiveQuery(() => db.scripts.toArray()) || [];
 
-  const [script, setScript] = useState<string>(defaultMultiFileEditorScript);
+  const [script, setScript] = useState<string>(defaultReportGeneratorScript);
   const [report, setReport] = useState("");
   const [reportName, setReportName] = useState("Report");
   const [reportExtension, setReportExtension] = useState("txt");
@@ -100,7 +100,7 @@ export default function ReportGenerator() {
           </>
         }
       />
-      <ReportGeneratorHeaderActions
+      <ReportGeneratorHeader
         files={files}
         scripts={scripts}
         selectedFiles={selectedFileFileItems}
@@ -113,7 +113,7 @@ export default function ReportGenerator() {
       <Box marginBottom="8">
         <CodeEditor script={script} onScriptChange={setScript} />
       </Box>
-      <ReportScriptActions
+      <ReportGeneratorScriptActions
         report={report}
         script={script}
         selectedFileItems={selectedFileFileItems}
@@ -131,7 +131,7 @@ export default function ReportGenerator() {
           onChange={setReport}
         />
       </Box>
-      <ReportActions
+      <ReportGeneratorFooter
         report={report}
         reportExtension={reportExtension}
         reportName={reportName}

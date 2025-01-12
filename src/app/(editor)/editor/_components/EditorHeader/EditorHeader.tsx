@@ -11,27 +11,27 @@ import {
   IDropdownOption,
 } from "../../../../_components/Dropdown/Dropdown";
 
-interface IReportGeneratorHeaderActionsProps {
+interface IEditorHeaderProps {
   files: Array<FileItem>;
   scripts: Array<FileItem>;
-  selectedFiles: Array<FileItem>;
+  selectedFile?: FileItem;
   selectedScript?: FileItem;
   onCreateScript: (scriptName: string) => void;
-  onFilesSelect: (files: Array<FileItem>) => void;
+  onFileSelect: (file: FileItem) => void;
   onSaveScript: (scriptName: string) => void;
   onScriptSelect: (script: FileItem) => void;
 }
 
-export function ReportGeneratorHeaderActions({
+export function EditorHeader({
   files,
   scripts,
-  selectedFiles,
+  selectedFile,
   selectedScript,
   onCreateScript,
-  onFilesSelect,
+  onFileSelect,
   onSaveScript,
   onScriptSelect,
-}: IReportGeneratorHeaderActionsProps) {
+}: IEditorHeaderProps) {
   const [scriptName, setScriptName] = useState("");
 
   const [fileOptions, setFileOptions] = useState<
@@ -55,6 +55,7 @@ export function ReportGeneratorHeaderActions({
         value: script,
       })),
     );
+
     if (selectedScript) {
       setScriptName(selectedScript.name);
     }
@@ -68,22 +69,24 @@ export function ReportGeneratorHeaderActions({
     >
       <Dropdown
         compareValues={(a, b) => a.id === b.id}
-        label="Files"
-        onValueChange={(selected) => onFilesSelect(selected)}
+        disabled={!fileOptions.length}
+        label="File to modify"
+        multiple={false}
         options={fileOptions}
-        placeholder="Select files"
-        selectedValues={selectedFiles}
-        multiple={true}
+        placeholder="Select file"
+        selectedValues={selectedFile ? [selectedFile] : []}
+        onValueChange={(selected) => onFileSelect(selected[0])}
       />
 
       <Dropdown
         compareValues={(a, b) => a.id === b.id}
-        label="Scripts"
-        onValueChange={(selected) => onScriptSelect(selected[0])}
+        disabled={!scriptOptions.length}
+        label="Script"
+        multiple={false}
         options={scriptOptions}
         placeholder="Select script"
         selectedValues={selectedScript ? [selectedScript] : []}
-        multiple={false}
+        onValueChange={(selected) => onScriptSelect(selected[0])}
       />
       <Field label="Script name" maxWidth={300}>
         <Input
@@ -96,7 +99,7 @@ export function ReportGeneratorHeaderActions({
       <HStack gap={4} marginTop={4}>
         <Button
           colorPalette="purple"
-          disabled={!selectedScript}
+          disabled={!selectedScript || !scriptName.length}
           variant="ghost"
           onClick={() => onSaveScript(scriptName)}
         >
@@ -106,6 +109,7 @@ export function ReportGeneratorHeaderActions({
         <Button
           colorPalette="purple"
           variant="ghost"
+          disabled={!scriptName.length}
           onClick={() => onCreateScript(scriptName)}
         >
           <MdOutlineAddCircleOutline />

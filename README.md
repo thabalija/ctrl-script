@@ -4,7 +4,7 @@ Transform how you manage your files with CTRL Script, the tool for bulk file mod
 
 See it live in action **[here](https://ctrl-script.web.app/)**.
 
-## KeyFeatures
+## Key Features
 
 ### File modification
 
