@@ -90,7 +90,7 @@ export default function Scripts() {
   const isLoading = scripts === undefined;
 
   return (
-    <Container maxWidth="1000px">
+    <Container>
       <Show when={isLoading}>
         <Loader />
       </Show>

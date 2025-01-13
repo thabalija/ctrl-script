@@ -115,7 +115,7 @@ export default function FilesContainer() {
   const isLoading = files === undefined;
 
   return (
-    <Container maxWidth="1000px">
+    <Container>
       <Show when={isLoading}>
         <Loader />
       </Show>
