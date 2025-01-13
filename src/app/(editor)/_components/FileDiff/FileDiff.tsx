@@ -19,12 +19,15 @@ export function FileDiff({ original, modified, language }: IFileDiffProps) {
         border="1px solid var(--chakra-colors-border)"
         borderRadius="lg"
         height="300px"
-        max-height="80vh"
-        overflow="hidden"
+        minHeight="100px"
+        maxHeight="80vh"
         width="100%"
+        minWidth="100px"
+        maxWidth="100%"
+        overflow="auto"
+        resize="both"
       >
         <DiffEditor
-          height="100%"
           language={language}
           modified={modified}
           original={original}

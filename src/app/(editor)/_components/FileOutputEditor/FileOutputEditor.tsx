@@ -23,12 +23,15 @@ export function FileOutputEditor({
         border="1px solid var(--chakra-colors-border)"
         borderRadius="lg"
         height="300px"
-        max-height="80vh"
-        overflow="hidden"
+        minHeight="100px"
+        maxHeight="80vh"
         width="100%"
+        minWidth="100px"
+        maxWidth="100%"
+        overflow="auto"
+        resize="both"
       >
         <Editor
-          height="100%"
           value={output}
           language={extension}
           theme={theme === "dark" ? "vs-dark" : "light"}
