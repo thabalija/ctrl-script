@@ -31,6 +31,9 @@ import { importFiles } from "../_utils/importFiles";
 export default function Scripts() {
   const scripts = useLiveQuery(() => db.scripts.toArray());
   const [selectedFileItemIds, setSelectedFileItemIds] = useState<number[]>([]);
+  const isLoadingFiles = scripts === undefined;
+  const [isImportingScripts, setIsImportingScripts] = useState(false);
+  const isLoading = isLoadingFiles || isImportingScripts;
 
   async function onDeleteScript(fileItem: FileItem) {
     if (selectedFileItemIds.includes(fileItem.id)) {
@@ -48,15 +51,16 @@ export default function Scripts() {
     });
   }
 
-  async function onAddScripts(fileList: FileList | null) {
-    if (fileList?.length) {
-      await importFiles(fileList, db.scripts);
+  function onAddScripts(fileList: FileList | null) {
+    setIsImportingScripts(true);
 
+    importFiles(fileList, db.scripts, () => {
+      setIsImportingScripts(false);
       toaster.create({
         title: `Scripts added successfully.`,
         type: "success",
       });
-    }
+    });
   }
 
   async function onDeleteMultipleScripts() {
@@ -86,8 +90,6 @@ export default function Scripts() {
     const compressedFile = await compressFiles(scriptsToDownload);
     downloadFile(compressedFile, "files.zip");
   }
-
-  const isLoading = scripts === undefined;
 
   return (
     <Container>

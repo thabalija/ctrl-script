@@ -16,11 +16,11 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { LuHardDriveDownload, LuListStart } from "react-icons/lu";
 import { db, FileItem } from "../../../db";
 import { Toaster, toaster } from "../../components/ui/toaster";
-import { Dropdown, IDropdownOption } from "../_components/Dropdown/Dropdown";
-import { Loader } from "../_components/Loader/Loader";
-import { FileTable } from "../_components/FileTable/FileTable";
-import { FileDropzone } from "../_components/FileDropzone/FileDropzone";
 import { ConfirmAction } from "../_components/ConfirmAction/ConfirmAction";
+import { Dropdown, IDropdownOption } from "../_components/Dropdown/Dropdown";
+import { FileDropzone } from "../_components/FileDropzone/FileDropzone";
+import { FileTable } from "../_components/FileTable/FileTable";
+import { Loader } from "../_components/Loader/Loader";
 import { EDITOR_ROUTE_PARAM } from "../_constants/editorRouteParam";
 import { ROUTE } from "../_constants/route";
 import { compressFiles } from "../_utils/compressFiles";
@@ -31,7 +31,9 @@ import { applyScriptToMultipleFiles } from "./_utils/applyScriptToMultipleFiles"
 export default function FilesContainer() {
   const files = useLiveQuery(() => db.files.toArray());
   const scripts = useLiveQuery(() => db.scripts.toArray());
-
+  const isLoadingFiles = files === undefined;
+  const [isImportingFiles, setIsImportingFiles] = useState(false);
+  const isLoading = isLoadingFiles || isImportingFiles;
   const [selectedScript, setSelectedScript] = useState<FileItem>();
   const [selectedFileItemIds, setSelectedFileItemIds] = useState<number[]>([]);
   const [scriptOptions, setScriptOptions] = useState<
@@ -79,12 +81,15 @@ export default function FilesContainer() {
     });
   }
 
-  async function onAddFiles(fileList: FileList | null) {
-    await importFiles(fileList, db.files);
+  function onAddFiles(fileList: FileList | null) {
+    setIsImportingFiles(true);
 
-    toaster.create({
-      title: `Files added successfully.`,
-      type: "success",
+    importFiles(fileList, db.files, () => {
+      setIsImportingFiles(false);
+      toaster.create({
+        title: `Files added successfully.`,
+        type: "success",
+      });
     });
   }
 
@@ -111,8 +116,6 @@ export default function FilesContainer() {
       type: "success",
     });
   }
-
-  const isLoading = files === undefined;
 
   return (
     <Container>

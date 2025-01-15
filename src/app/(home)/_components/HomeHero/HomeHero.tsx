@@ -8,9 +8,8 @@ import { ROUTE } from "../../../_constants/route";
 import { importFiles } from "../../../_utils/importFiles";
 
 export default function HomeHero() {
-  async function onAddFiles(fileList: FileList | null) {
-    await importFiles(fileList, db.files);
-    redirect(ROUTE.FILES);
+  function onAddFiles(fileList: FileList | null) {
+    importFiles(fileList, db.files, () => redirect(ROUTE.FILES));
   }
 
   return (
