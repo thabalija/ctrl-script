@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { LuListStart } from "react-icons/lu";
 import { MdRedo, MdUndo } from "react-icons/md";
 import { FileItem } from "../../../../../../db";
+import { toaster } from "../../../../../components/ui/toaster";
 
 interface IEditorScriptActionsProps {
   currentFileItem?: FileItem;
@@ -36,10 +37,29 @@ export function EditorScriptActions({
 
     if (script === undefined) return;
 
-    const func = new Function(script);
-    const result = func.call(null, original);
+    try {
+      const func = new Function(script);
+      const result = func.call(null, original);
 
-    if (modified === result) return;
+      if (modified === result) return;
+
+      if (!(typeof result === "string")) {
+        throw new Error("Script must return a string.");
+      }
+
+      updateFile(result);
+
+      toaster.create({
+        title: `Script applied successfully.`,
+        type: "success",
+      });
+    } catch (error) {
+      toaster.create({ title: `${error}`, type: "error" });
+    }
+  }
+
+  function updateFile(newFileContent: string) {
+    if (!currentFileItem) return;
 
     if (currentVersionIndex < versions.length - 1) {
       // remove all versions after the current version
@@ -49,13 +69,13 @@ export function EditorScriptActions({
       );
     }
 
-    const newFile = new File([result], currentFileItem.name, {
+    const newFile = new File([newFileContent], currentFileItem.name, {
       type: currentFileItem.file.type,
     });
 
     setVersions([...versions, newFile]);
     setCurrentVersionIndex(currentVersionIndex + 1);
-    onModifiedChange(result);
+    onModifiedChange(newFileContent);
   }
 
   async function undoFileChange() {

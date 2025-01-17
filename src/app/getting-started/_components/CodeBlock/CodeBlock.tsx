@@ -3,10 +3,10 @@
 import { Box, Container, IconButton } from "@chakra-ui/react";
 import { useTheme } from "next-themes";
 import { themes } from "prism-react-renderer";
+import { useEffect, useState } from "react";
 import { CodeBlock as ReactCodeBlock } from "react-code-block";
 import { FaRegCopy } from "react-icons/fa";
-import { Toaster, toaster } from "../../../../components/ui/toaster";
-import { useEffect, useState } from "react";
+import { toaster } from "../../../../components/ui/toaster";
 import { Loader } from "../../../_components/Loader/Loader";
 
 interface ICodeBlockDemoProps {
@@ -65,8 +65,6 @@ export function CodeBlock({ code }: ICodeBlockDemoProps) {
           >
             <FaRegCopy />
           </IconButton>
-
-          <Toaster />
         </Container>
       ) : (
         <Loader />

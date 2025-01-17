@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { LuHardDriveDownload, LuListStart } from "react-icons/lu";
 import { db, FileItem } from "../../../db";
-import { Toaster, toaster } from "../../components/ui/toaster";
+import { toaster } from "../../components/ui/toaster";
 import { ConfirmAction } from "../_components/ConfirmAction/ConfirmAction";
 import { Dropdown, IDropdownOption } from "../_components/Dropdown/Dropdown";
 import { FileDropzone } from "../_components/FileDropzone/FileDropzone";
@@ -115,12 +115,16 @@ export default function FilesContainer() {
       ? files.filter((file) => selectedFileItemIds.includes(file.id))
       : files;
 
-    await applyScriptToMultipleFiles(fileItemsToModify, script);
+    try {
+      await applyScriptToMultipleFiles(fileItemsToModify, script);
 
-    toaster.create({
-      title: `Script applied successfully.`,
-      type: "success",
-    });
+      toaster.create({
+        title: `Script applied successfully.`,
+        type: "success",
+      });
+    } catch (error) {
+      toaster.create({ title: `${error}`, type: "error" });
+    }
   }
 
   return (
@@ -224,8 +228,6 @@ export default function FilesContainer() {
       <Box margin="32px 0">
         <FileDropzone onAddFiles={onAddFiles} />
       </Box>
-
-      <Toaster />
     </Container>
   );
 }

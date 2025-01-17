@@ -17,7 +17,7 @@ import { useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { LuHardDriveDownload } from "react-icons/lu";
 import { db, FileItem } from "../../../db";
-import { Toaster, toaster } from "../../components/ui/toaster";
+import { toaster } from "../../components/ui/toaster";
 import { ConfirmAction } from "../_components/ConfirmAction/ConfirmAction";
 import { FileDropzone } from "../_components/FileDropzone/FileDropzone";
 import { FileTable } from "../_components/FileTable/FileTable";
@@ -166,8 +166,6 @@ export default function Scripts() {
       <Box mt="32px" mb="32px">
         <FileDropzone onAddFiles={onAddScripts} />
       </Box>
-
-      <Toaster />
     </Container>
   );
 }

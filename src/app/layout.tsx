@@ -2,6 +2,7 @@ import { Provider } from "@/components/ui/provider";
 import { Container } from "@chakra-ui/react";
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import { Toaster } from "../components/ui/toaster";
 import { Footer } from "./_components/Footer/Footer";
 import { PageBackground } from "./_components/PageBackground/PageBackground";
 import { PageHeader } from "./_components/PageHeader/PageHeader";
@@ -56,6 +57,8 @@ export default function RootLayout({
               <Suspense>{children}</Suspense>
             </Container>
             <Footer />
+
+            <Toaster />
           </Container>
         </Provider>
       </body>
