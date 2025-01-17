@@ -12,6 +12,10 @@ export async function applyScriptToMultipleFiles(
 
     const result = scriptFunction.call(null, fileText);
 
+    if (!(typeof result === "string")) {
+      throw new Error("Script must return a string.");
+    }
+
     const newFile = new File([result], fileItem.name, {
       type: fileItem.file.type,
     });

@@ -5,6 +5,7 @@ import { useState } from "react";
 import { LuListStart } from "react-icons/lu";
 import { MdRedo, MdUndo } from "react-icons/md";
 import { FileItem } from "../../../../../../db";
+import { toaster } from "../../../../../components/ui/toaster";
 
 interface IReportGeneratorScriptActionsProps {
   selectedFileItems: Array<FileItem>;
@@ -25,18 +26,34 @@ export function ReportGeneratorScriptActions({
   async function applyScript() {
     if (script === undefined) return;
 
-    const func = new Function(script);
+    try {
+      const func = new Function(script);
+      const selectedFilesText: Array<string> = [];
 
-    const selectedFilesText: Array<string> = [];
+      for (const fileItem of selectedFileItems) {
+        const text = await fileItem.file.text();
+        selectedFilesText.push(text);
+      }
 
-    for (const fileItem of selectedFileItems) {
-      const text = await fileItem.file.text();
-      selectedFilesText.push(text);
+      const result = func.call(null, selectedFilesText);
+
+      if (!(typeof result === "string")) {
+        throw new Error("Script must return a string.");
+      }
+
+      updateFile(result);
+
+      toaster.create({
+        title: `Report generated successfully.`,
+        type: "success",
+      });
+    } catch (error) {
+      toaster.create({ title: `${error}`, type: "error" });
     }
+  }
 
-    const result = func.call(null, selectedFilesText);
-
-    if (report === result) return;
+  function updateFile(newReportContent: string) {
+    if (report === newReportContent) return;
 
     if (currentVersionIndex < versions.length - 1) {
       // remove all versions after the current version
@@ -46,9 +63,9 @@ export function ReportGeneratorScriptActions({
       );
     }
 
-    setVersions([...versions, result]);
+    setVersions([...versions, newReportContent]);
     setCurrentVersionIndex(currentVersionIndex + 1);
-    onGenerateReport(result);
+    onGenerateReport(newReportContent);
   }
 
   async function undoFileChange() {
