@@ -1,20 +1,13 @@
 import { db, FileItem } from "../../../../db";
 
 export async function applyScriptToMultipleFiles(
-  selectedScript: FileItem,
-  files: Array<FileItem>,
-  selectedFileItemIds: Array<number>,
-) {
-  const script = await selectedScript.file.text();
-
-  const fileItemsToModify = selectedFileItemIds.length
-    ? files.filter((file) => selectedFileItemIds.includes(file.id))
-    : files;
-
+  fileItems: Array<FileItem>,
+  script: string,
+): Promise<number> {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
   const scriptFunction = new Function(script);
 
-  for (const fileItem of fileItemsToModify) {
+  for (const fileItem of fileItems) {
     const fileText = await fileItem.file.text();
 
     const result = scriptFunction.call(null, fileText);
@@ -27,4 +20,6 @@ export async function applyScriptToMultipleFiles(
 
     await db.files.put(fileItem);
   }
+
+  return await db.files.bulkPut(fileItems);
 }

@@ -26,7 +26,7 @@ import { EDITOR_ROUTE_PARAM } from "../_constants/editorRouteParam";
 import { ROUTE } from "../_constants/route";
 import { compressFiles } from "../_utils/compressFiles";
 import { downloadFile } from "../_utils/downloadFile";
-import { importFiles } from "../_utils/importFiles";
+import { importFilesWithWebWorker } from "../_utils/importFilesWithWebWorker";
 
 export default function Scripts() {
   const scripts = useLiveQuery(() => db.scripts.toArray());
@@ -54,7 +54,7 @@ export default function Scripts() {
   function onAddScripts(fileList: FileList | null) {
     setIsImportingScripts(true);
 
-    importFiles(fileList, db.scripts, () => {
+    importFilesWithWebWorker(fileList, db.scripts, () => {
       setIsImportingScripts(false);
       toaster.create({
         title: `Scripts added successfully.`,

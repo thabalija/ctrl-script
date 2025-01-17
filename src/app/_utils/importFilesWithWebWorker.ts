@@ -1,8 +1,9 @@
 import { EntityTable } from "dexie";
 import { FileItem } from "../../../db";
 import { bulkAddFileItemToDb } from "./bulkAddFileItemToDb";
+import { WorkerMessageType } from "../_constants/workerMessageType";
 
-export function importFiles(
+export function importFilesWithWebWorker(
   fileList: FileList | null,
   entityTable: EntityTable<FileItem, "id">,
   onImportDone: () => unknown,
@@ -11,9 +12,7 @@ export function importFiles(
     return;
   }
 
-  const worker = new Worker(
-    new URL("../_workers/importFilesWorker.ts", import.meta.url),
-  );
+  const worker = new Worker(new URL("../_workers/worker.ts", import.meta.url));
 
   worker.onmessage = async (message) => {
     await bulkAddFileItemToDb(message.data, entityTable);
@@ -21,5 +20,8 @@ export function importFiles(
     worker.terminate();
   };
 
-  worker.postMessage({ files: Array.from(fileList) });
+  worker.postMessage({
+    files: Array.from(fileList),
+    type: WorkerMessageType.IMPORT_FILES,
+  });
 }
