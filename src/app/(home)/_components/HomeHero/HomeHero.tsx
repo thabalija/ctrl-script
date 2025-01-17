@@ -5,11 +5,11 @@ import { redirect } from "next/navigation";
 import { db } from "../../../../../db";
 import { FileSelect } from "../../../_components/FileSelect/FileSelect";
 import { ROUTE } from "../../../_constants/route";
-import { importFiles } from "../../../_utils/importFiles";
+import { importFilesWithWebWorker } from "../../../_utils/importFilesWithWebWorker";
 
 export default function HomeHero() {
   function onAddFiles(fileList: FileList | null) {
-    importFiles(fileList, db.files, () => redirect(ROUTE.FILES));
+    importFilesWithWebWorker(fileList, db.files, () => redirect(ROUTE.FILES));
   }
 
   return (

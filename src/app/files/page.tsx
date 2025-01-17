@@ -25,7 +25,7 @@ import { EDITOR_ROUTE_PARAM } from "../_constants/editorRouteParam";
 import { ROUTE } from "../_constants/route";
 import { compressFiles } from "../_utils/compressFiles";
 import { downloadFile } from "../_utils/downloadFile";
-import { importFiles } from "../_utils/importFiles";
+import { importFilesWithWebWorker } from "../_utils/importFilesWithWebWorker";
 import { applyScriptToMultipleFiles } from "./_utils/applyScriptToMultipleFiles";
 
 export default function FilesContainer() {
@@ -84,7 +84,7 @@ export default function FilesContainer() {
   function onAddFiles(fileList: FileList | null) {
     setIsImportingFiles(true);
 
-    importFiles(fileList, db.files, () => {
+    importFilesWithWebWorker(fileList, db.files, () => {
       setIsImportingFiles(false);
       toaster.create({
         title: `Files added successfully.`,
@@ -109,7 +109,13 @@ export default function FilesContainer() {
   async function onApplyScript() {
     if (!selectedScript || !files) return;
 
-    applyScriptToMultipleFiles(selectedScript, files, selectedFileItemIds);
+    const script = await selectedScript.file.text();
+
+    const fileItemsToModify = selectedFileItemIds.length
+      ? files.filter((file) => selectedFileItemIds.includes(file.id))
+      : files;
+
+    await applyScriptToMultipleFiles(fileItemsToModify, script);
 
     toaster.create({
       title: `Script applied successfully.`,

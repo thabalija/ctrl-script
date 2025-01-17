@@ -1,13 +1,9 @@
 import * as zip from "@zip.js/zip.js";
 
-type UnzipFileWorkerMessage = {
-  files: Array<File>;
-};
-
-const onmessage = async (event: MessageEvent<UnzipFileWorkerMessage>) => {
+export async function unzipFiles(files: Array<File>): Promise<Array<File>> {
   const filesForImport = [];
 
-  for (const file of event.data.files) {
+  for (const file of files) {
     const extension = file.name.split(".").pop() || "txt";
 
     if (extension === "zip") {
@@ -27,7 +23,5 @@ const onmessage = async (event: MessageEvent<UnzipFileWorkerMessage>) => {
     }
   }
 
-  postMessage(filesForImport);
-};
-
-addEventListener("message", onmessage);
+  return filesForImport;
+}
