@@ -93,6 +93,7 @@ export function ReportGeneratorScriptActions({
         Apply script
       </Button>
       <IconButton
+        aria-label="Undo"
         colorPalette="purple"
         disabled={currentVersionIndex <= 0}
         rounded="full"
@@ -102,6 +103,7 @@ export function ReportGeneratorScriptActions({
         <MdUndo />
       </IconButton>
       <IconButton
+        aria-label="Redo"
         colorPalette="purple"
         disabled={currentVersionIndex === versions.length - 1}
         rounded="full"

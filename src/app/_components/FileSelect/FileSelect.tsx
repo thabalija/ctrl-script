@@ -19,13 +19,13 @@ export function FileSelect({ onAddFiles }: IFileUploadDropzoneProps) {
     >
       <FileUploadTrigger asChild>
         <Button
-          variant="outline"
-          rounded="full"
-          padding={"8px 8px 8px 24px"}
-          height={"auto"}
-          width="100%"
-          background="white"
           _dark={{ background: "black" }}
+          background="white"
+          height={"auto"}
+          padding={"8px 8px 8px 24px"}
+          rounded="full"
+          variant="outline"
+          width="100%"
         >
           <Flex alignItems="center" justifyContent="space-between" width="100%">
             <Text fontSize="16px" color="gray.500" flex="1" textAlign="left">

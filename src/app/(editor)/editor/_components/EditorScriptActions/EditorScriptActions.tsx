@@ -113,6 +113,7 @@ export function EditorScriptActions({
         Apply script
       </Button>
       <IconButton
+        aria-label="Undo"
         colorPalette="purple"
         disabled={!currentFileItem || currentVersionIndex === 0}
         rounded="full"
@@ -122,6 +123,7 @@ export function EditorScriptActions({
         <MdUndo />
       </IconButton>
       <IconButton
+        aria-label="Redo"
         colorPalette="purple"
         disabled={
           !currentFileItem || currentVersionIndex === versions.length - 1

@@ -73,6 +73,7 @@ export function FileTable({
       </Table.Cell>
       <Table.Cell textAlign="center">
         <IconButton
+          aria-label="Edit"
           colorPalette="purple"
           rounded="full"
           variant="ghost"
@@ -82,6 +83,7 @@ export function FileTable({
         </IconButton>
 
         <ConfirmAction
+          aria-label="Delete"
           title="Delete file"
           description="Are you sure you want to delete this file?"
           onConfirm={() => onDeleteFileItem(fileItem)}
@@ -99,6 +101,7 @@ export function FileTable({
         </ConfirmAction>
 
         <IconButton
+          aria-label="Download"
           colorPalette="green"
           rounded="full"
           variant="ghost"
