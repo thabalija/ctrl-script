@@ -115,8 +115,8 @@ export default function Scripts() {
 
       {!isLoading && scripts.length ? (
         <>
-          <Box margin="32px 0">
-            <Heading as="h1" marginBottom="24px">
+          <Box marginBottom="4">
+            <Heading as="h1" fontSize="3xl" marginBottom="8">
               Scripts ({scripts.length})
             </Heading>
             <FileTable
