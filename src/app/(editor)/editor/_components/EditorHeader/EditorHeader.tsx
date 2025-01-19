@@ -69,7 +69,7 @@ export function EditorHeader({
     >
       <Dropdown
         compareValues={(a, b) => a.id === b.id}
-        disabled={!fileOptions.length}
+        emptyLabel="No files added"
         label="File to modify"
         multiple={false}
         options={fileOptions}
@@ -80,10 +80,10 @@ export function EditorHeader({
 
       <Dropdown
         compareValues={(a, b) => a.id === b.id}
-        disabled={!scriptOptions.length}
         label="Script"
         multiple={false}
         options={scriptOptions}
+        emptyLabel="No scripts added"
         placeholder="Select script"
         selectedValues={selectedScript ? [selectedScript] : []}
         onValueChange={(selected) => onScriptSelect(selected[0])}
