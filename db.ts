@@ -1,6 +1,6 @@
 import Dexie, { type EntityTable } from "dexie";
 
-interface FileItem {
+interface IFileItem {
   id: number;
   name: string;
   extension: string;
@@ -8,8 +8,8 @@ interface FileItem {
 }
 
 const db = new Dexie("CTRLScriptData") as Dexie & {
-  files: EntityTable<FileItem, "id">;
-  scripts: EntityTable<FileItem, "id">;
+  files: EntityTable<IFileItem, "id">;
+  scripts: EntityTable<IFileItem, "id">;
 };
 
 db.version(1).stores({
@@ -18,4 +18,4 @@ db.version(1).stores({
 });
 
 export { db };
-export type { FileItem };
+export type { IFileItem as FileItem };
