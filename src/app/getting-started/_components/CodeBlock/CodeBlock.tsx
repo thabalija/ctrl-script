@@ -57,6 +57,7 @@ export function CodeBlock({ code }: ICodeBlockDemoProps) {
           </Box>
 
           <IconButton
+            aria-label="Copy"
             margin="-8px -8px 0 0"
             colorPalette="purple"
             rounded="full"

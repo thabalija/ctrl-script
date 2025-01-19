@@ -32,7 +32,7 @@ export default function KeyFeatures() {
 
   return (
     <Container textAlign="center" maxWidth="1200px" padding="24px">
-      <Heading as="h1" mb="48px" size="3xl">
+      <Heading as="h2" mb="48px" size="3xl">
         Key Features
       </Heading>
       <Stack direction={["column", "column", "row", "row"]} gap="8">

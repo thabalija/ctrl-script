@@ -44,7 +44,7 @@ export function PageHeader() {
         paddingLeft={{ lgDown: "0" }}
       >
         <DrawerTrigger asChild hideFrom={["lg", "xl"]}>
-          <Button variant="ghost">
+          <Button variant="ghost" aria-label="Toggle menu">
             <IoMenu />
           </Button>
         </DrawerTrigger>

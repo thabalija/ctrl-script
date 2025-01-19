@@ -47,10 +47,16 @@ export function ConfirmationDialog({
         ) : undefined}
         <DialogBody>{description ?? undefined}</DialogBody>
         <DialogFooter>
-          <Button variant="outline" onClick={() => onClose(false)}>
+          <Button
+            aria-label="Cancel"
+            variant="outline"
+            onClick={() => onClose(false)}
+          >
             {cancelText}
           </Button>
-          <Button onClick={() => onClose(true)}>{confirmText}</Button>
+          <Button aria-label="confirm" onClick={() => onClose(true)}>
+            {confirmText}
+          </Button>
         </DialogFooter>
         <DialogCloseTrigger />
       </DialogContent>
