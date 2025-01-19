@@ -108,6 +108,7 @@ export function ReportGeneratorHeader({
         <Button
           colorPalette="purple"
           variant="ghost"
+          disabled={!scriptName.length}
           onClick={() => onCreateScript(scriptName)}
         >
           <MdOutlineAddCircleOutline />
