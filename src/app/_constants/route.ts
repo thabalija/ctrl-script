@@ -1,8 +1,8 @@
 export enum ROUTE {
+  HOME = "/",
   EDITOR = "/editor",
   FILES = "/files",
   GETTING_STARTED = "/getting-started",
-  HOME = "/",
   REPORT_GENERATOR = "/report-generator",
   SCRIPTS = "/scripts",
 }
