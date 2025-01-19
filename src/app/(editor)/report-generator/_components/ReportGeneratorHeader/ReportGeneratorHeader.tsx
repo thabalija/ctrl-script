@@ -68,22 +68,24 @@ export function ReportGeneratorHeader({
     >
       <Dropdown
         compareValues={(a, b) => a.id === b.id}
+        emptyLabel="No files added"
         label="Files"
-        onValueChange={(selected) => onFilesSelect(selected)}
+        multiple={true}
         options={fileOptions}
         placeholder="Select files"
         selectedValues={selectedFiles}
-        multiple={true}
+        onValueChange={(selected) => onFilesSelect(selected)}
       />
 
       <Dropdown
         compareValues={(a, b) => a.id === b.id}
+        emptyLabel="No scripts added"
         label="Scripts"
-        onValueChange={(selected) => onScriptSelect(selected[0])}
+        multiple={false}
         options={scriptOptions}
         placeholder="Select script"
         selectedValues={selectedScript ? [selectedScript] : []}
-        multiple={false}
+        onValueChange={(selected) => onScriptSelect(selected[0])}
       />
       <Field label="Script name" maxWidth={300}>
         <Input

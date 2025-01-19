@@ -166,12 +166,12 @@ export default function FilesContainer() {
               <Box maxWidth={"200px"}>
                 <Dropdown
                   compareValues={(a, b) => a.id === b.id}
-                  onValueChange={(selected) => setSelectedScript(selected[0])}
+                  emptyLabel="No scripts added"
+                  multiple={false}
                   options={scriptOptions}
                   placeholder="Select script"
                   selectedValues={selectedScript ? [selectedScript] : []}
-                  multiple={false}
-                  disabled={!scripts?.length}
+                  onValueChange={(selected) => setSelectedScript(selected[0])}
                 />
               </Box>
 
