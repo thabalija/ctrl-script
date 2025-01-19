@@ -37,7 +37,6 @@ export default function RootLayout({
           href="/images/favicon-16x16.png"
         />
         <link rel="favicon" href="/images/favicon.ico" />
-        <link rel="manifest" href="/manifest/site.webmanifest" />
       </head>
       <body>
         <Provider>
