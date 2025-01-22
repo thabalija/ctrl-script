@@ -1,13 +1,11 @@
-name: E2E test with Playwright
+name: Build the application and run E2E tests
 on:
-  workflow_run:
-    workflows:
-      - Build the application
-    types:
-      - completed
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  test:
+  build_and_test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
@@ -19,14 +17,14 @@ jobs:
         with:
           node-version: lts/*
 
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build the app
+        run: npm run build
+
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-
-      - name: Download build artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: nextjs-build
-          path: .next/
 
       - name: Run Playwright tests
         run: npm run test
