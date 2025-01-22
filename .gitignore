@@ -43,5 +43,7 @@ next-env.d.ts
 .firebase
 
 # playwright
-/playwright-report
-/test-results
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
