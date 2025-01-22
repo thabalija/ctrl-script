@@ -1,9 +1,10 @@
 name: E2E test with Playwright
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+  workflow_run:
+    workflows:
+      - Build the app
+    types:
+      - completed
 jobs:
   test:
     timeout-minutes: 60
