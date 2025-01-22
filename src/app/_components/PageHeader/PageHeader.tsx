@@ -25,7 +25,7 @@ export function PageHeader() {
     { path: ROUTE.SCRIPTS, label: "Scripts" },
     { path: ROUTE.EDITOR, label: "Editor" },
     { path: ROUTE.REPORT_GENERATOR, label: "Report Generator" },
-    { path: ROUTE.GETTING_STARTED, label: "Getting started" },
+    { path: ROUTE.GETTING_STARTED, label: "Getting Started" },
   ];
 
   return (
