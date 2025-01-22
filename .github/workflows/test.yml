@@ -2,9 +2,10 @@ name: E2E test with Playwright
 on:
   workflow_run:
     workflows:
-      - Build the app
+      - Build the application
     types:
       - completed
+
 jobs:
   test:
     timeout-minutes: 60
