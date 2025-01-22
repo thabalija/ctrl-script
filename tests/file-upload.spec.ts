@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import path from "path";
 import { ROUTE } from "../src/app/_constants/route";
 import { uploadFile } from "./_utils/uploadFile";
 
@@ -13,7 +14,7 @@ test.describe("Homepage file upload", () => {
     await uploadFile(
       page,
       "Start by selecting files...",
-      "./_assets/text-file.txt",
+      path.join(__dirname, "./_assets/text-file.txt"),
     );
     await page.waitForURL(`${ROUTE.FILES}/`);
 
@@ -26,7 +27,7 @@ test.describe("Homepage file upload", () => {
     await uploadFile(
       page,
       "Start by selecting files...",
-      "./_assets/zipped-file.zip",
+      path.join(__dirname, "./_assets/zipped-file.zip"),
     );
     await page.waitForURL(`${ROUTE.FILES}/`);
 
@@ -40,14 +41,22 @@ test.describe("Files page file upload", () => {
   });
 
   test("should upload a text file and display the file", async ({ page }) => {
-    await uploadFile(page, "Select any text file", "./_assets/text-file.txt");
+    await uploadFile(
+      page,
+      "Select any text file",
+      path.join(__dirname, "./_assets/text-file.txt"),
+    );
     await expect(page.getByText("text-file")).toBeVisible();
   });
 
   test("should unpack a zip file and upload files inside and display the file", async ({
     page,
   }) => {
-    await uploadFile(page, "Select any text file", "./_assets/zipped-file.zip");
+    await uploadFile(
+      page,
+      "Select any text file",
+      path.join(__dirname, "./_assets/zipped-file.zip"),
+    );
     await expect(page.getByText("zipped-test-file")).toBeVisible();
   });
 });
@@ -58,7 +67,11 @@ test.describe("Scripts page file upload", () => {
   });
 
   test("should upload a text file and display the file", async ({ page }) => {
-    await uploadFile(page, "Select any text file", "./_assets/test-script.js");
+    await uploadFile(
+      page,
+      "Select any text file",
+      path.join(__dirname, "./_assets/test-script.js"),
+    );
     await expect(page.getByText("test-script")).toBeVisible();
   });
 
@@ -68,7 +81,7 @@ test.describe("Scripts page file upload", () => {
     await uploadFile(
       page,
       "Select any text file",
-      "./_assets/zipped-script.zip",
+      path.join(__dirname, "./_assets/zipped-script.zip"),
     );
     await expect(page.getByText("zipped-test-script")).toBeVisible();
   });

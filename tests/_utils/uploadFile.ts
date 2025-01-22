@@ -1,5 +1,4 @@
 import { Page } from "@playwright/test";
-import path from "path";
 
 export async function uploadFile(
   page: Page,
@@ -9,5 +8,5 @@ export async function uploadFile(
   const fileChooserPromise = page.waitForEvent("filechooser");
   await page.getByText(inputPlaceholder).click();
   const fileChooser = await fileChooserPromise;
-  await fileChooser.setFiles(path.join(__dirname, filePath));
+  await fileChooser.setFiles(filePath);
 }
